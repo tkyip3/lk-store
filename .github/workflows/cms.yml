@@ -60,7 +60,6 @@ jobs:
 
       - name: Deploy
         run: |
-          pnpm deploy:database
           echo "${{ secrets.PAYLOAD_SECRET }}" | pnpx wrangler secret put PAYLOAD_SECRET --config wrangler.jsonc --env=$CLOUDFLARE_ENV
           echo "${{ secrets.PRIVATE_STRIPE_API_KEY }}" | pnpx wrangler secret put PRIVATE_STRIPE_API_KEY --config wrangler.jsonc --env=$CLOUDFLARE_ENV
           pnpm deploy:cloudflare
