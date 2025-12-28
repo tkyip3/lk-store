@@ -15,8 +15,7 @@ on:
 env:
   PROJECT_NAME: 'lk-store'
   PROJECT_PATH: .
-  DEPLOY_PATH: pruned
-  CLOUDFLARE_ENV:
+  CLOUDFLARE_ENV: production
 
 jobs:
   deploy:
@@ -56,11 +55,14 @@ jobs:
           # EMAIL_SECRET_ACCESS_KEY: ${{secrets.EMAIL_SECRET_ACCESS_KEY}}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          NEXT_PUBLIC_PAYLOAD_API: ${{ vars.NEXT_PUBLIC_PAYLOAD_API }}
+          PRIVATE_STRIPE_API_KEY: ${{ secrets.PRIVATE_STRIPE_API_KEY }}
 
       - name: Deploy
         run: |
           pnpm deploy:database
           echo "${{ secrets.PAYLOAD_SECRET }}" | pnpx wrangler secret put PAYLOAD_SECRET --config wrangler.jsonc --env=$CLOUDFLARE_ENV
+          echo "${{ secrets.PRIVATE_STRIPE_API_KEY }}" | pnpx wrangler secret put PRIVATE_STRIPE_API_KEY --config wrangler.jsonc --env=$CLOUDFLARE_ENV
           pnpm deploy:cloudflare
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

@@ -1,12 +1,18 @@
-import type { CollectionConfig } from 'payload'
+import type { Access, CollectionConfig } from 'payload'
+
+const readAccess: Access = ({ req }) => {
+  // return req.user.role === 'admin'
+  return true
+} // ✅ 允許未登入者讀取
 
 export const Products: CollectionConfig = {
   slug: 'products',
   access: {
-    read: () => true, // ✅ 允許未登入者讀取
+    read: readAccess, // ✅ 允許未登入者讀取
   },
   admin: { useAsTitle: 'name' },
   hooks: {
+    afterChange: [],
     beforeValidate: [
       ({ data, operation }) => {
         // 仅在创建（create）时自动生成 UUID，避免更新时覆盖
@@ -28,6 +34,12 @@ export const Products: CollectionConfig = {
       },
       localized: true,
     },
+    // {
+    //   name: 'virtual-button',
+    //   type: 'ui',
+    //   label: 'Link',
+    //   admin: { components: { Field: () => '🔗 /products/{slug}' } },
+    // },
     {
       name: 'slug',
       type: 'text',

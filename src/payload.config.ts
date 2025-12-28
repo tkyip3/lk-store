@@ -1,7 +1,7 @@
 import { sqliteD1Adapter } from '@payloadcms/db-d1-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
-import { buildConfig } from 'payload'
+import { buildConfig, Plugin } from 'payload'
 import { fileURLToPath } from 'url'
 import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
@@ -27,6 +27,11 @@ const cloudflare =
     ? await getCloudflareContextFromWrangler()
     : await getCloudflareContext({ async: true })
 
+const productPlugin: Plugin = (config) => {
+  config.collections = [...config.collections, Products]
+  return config
+}
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -34,7 +39,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Products],
+  collections: [Users, Media /* Products */],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -48,6 +53,7 @@ export default buildConfig({
       bucket: cloudflare.env.R2,
       collections: { media: true },
     }),
+    productPlugin,
   ],
   i18n: {
     supportedLanguages: { en, zh, 'zh-TW': zhTw },
