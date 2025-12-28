@@ -10,6 +10,7 @@ on:
       - public/**
       - pnpm-lock.yaml
       - wrangler.jsonc
+      - package.json
 
 env:
   PROJECT_NAME: 'lk-store'
