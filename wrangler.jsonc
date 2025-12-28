@@ -55,6 +55,7 @@
           "binding": "D1",
           "database_id": "bf2f7cc9-665e-4975-a026-f36949a6894d",
           "database_name": "lk-store-db",
+          "remote": true,
         },
       ],
       "vars": {
@@ -71,6 +72,7 @@
         {
           "binding": "R2",
           "bucket_name": "lk-store-bucket",
+          "remote": true,
         },
         // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
         // {
