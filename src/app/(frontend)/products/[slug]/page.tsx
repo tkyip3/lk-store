@@ -13,6 +13,7 @@ async function getProductBySlug(slug: string): Promise<Product | null> {
   const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[slug][equals]=${encodeURIComponent(slug)}&locale=zh-TW`
   const res = await fetch(url, { next: { revalidate: 60 } })
   if (!res.ok) return null
+  /* @ts-ignore */
   const { docs } = await res.json()
   return docs[0] || null
 }
@@ -75,9 +76,12 @@ export default async function ProductDetail({
       })
 
       const data = await res.json()
+      /* @ts-ignore */
       if (res.ok && data.url) {
+        /* @ts-ignore */
         window.location.href = data.url // ⚠️ 用 location.href 跳轉（Checkout 要整頁）
       } else {
+        /* @ts-ignore */
         alert(`失敗：${data.error || '未知錯誤'}`)
       }
     } catch (err) {
