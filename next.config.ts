@@ -12,6 +12,7 @@ const nextConfig = {
 
     return webpackConfig
   },
+  turbopack: { resolveExtensions: ['.cts', '.cjs', '.ts', '.tsx', '.js', '.jsx', '.mts', '.mjs'] },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
