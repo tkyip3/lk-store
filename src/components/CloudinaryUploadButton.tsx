@@ -31,9 +31,12 @@ export default function CloudinaryUploadButton({
       )
       const data = await res.json()
 
+      /* @ts-ignore */
       if (data.public_id) {
         // ✅ 生成 Stripe 專用 512x512 縮圖 URL
+        /* @ts-ignore */
         const stripeUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/w_512,h_512,c_fill,q_auto,f_auto/${data.public_id}.webp`
+        /* @ts-ignore */
         onUpload(data.public_id, stripeUrl)
       }
     } catch (err) {
