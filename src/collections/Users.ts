@@ -8,7 +8,7 @@ export const Users: CollectionConfig = {
   auth: true,
   fields: [
     // Email added by default
-    { name: 'name', type: 'number' },
+    { name: 'name', type: 'text' },
     {
       name: 'role',
       label: 'Role',
