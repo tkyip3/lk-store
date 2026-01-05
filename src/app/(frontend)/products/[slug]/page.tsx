@@ -147,7 +147,7 @@ export default async function ProductDetail({
             <BuyButtons
               productId={String(product.id)}
               stock={product.stock ?? 0}
-              price={displayPrice}
+              price={parseFloat(displayPrice)}
             />
           </div>
         </div>
