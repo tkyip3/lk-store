@@ -23,7 +23,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'lk-store-production.tkyip3.workers.dev',
       },
-    ], // 移除 `as const`
+    ],
   },
 }
 
