@@ -46,7 +46,7 @@ export default async function ProductList() {
 
             <div className="card-body">
               <h2 className="card-title">{p.name}</h2>
-              <Image
+              <img
                 key={p.images?.[0]?.id || 'placeholder'}
                 src={(() => {
                   const firstImage = p.images?.[0]?.image
