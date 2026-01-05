@@ -46,6 +46,20 @@ export default async function ProductList() {
 
             <div className="card-body">
               <h2 className="card-title">{p.name}</h2>
+              <Image
+                key={p.images?.[0]?.id || 'placeholder'}
+                src={(() => {
+                  const firstImage = p.images?.[0]?.image
+                  if (firstImage && typeof firstImage !== 'number' && 'url' in firstImage) {
+                    return firstImage.url
+                  }
+                  return ''
+                })()}
+                alt={p.name}
+                width={200}
+                height={200}
+              />
+
               <p>
                 {p.price} {p.currency.toUpperCase()}
               </p>
