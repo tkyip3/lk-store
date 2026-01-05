@@ -31,6 +31,7 @@ export default async function ProductList() {
                       alt={p.name}
                       fill
                       className="object-cover"
+                      unoptimized
                     />
                   )
                 }
