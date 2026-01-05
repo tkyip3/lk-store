@@ -58,6 +58,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-contain"
+                unoptimized
               />
             </div>
           </SwiperSlide>
@@ -84,6 +85,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                   fill
                   sizes="100px"
                   className="object-cover"
+                  unoptimized
                 />
               </div>
             </SwiperSlide>

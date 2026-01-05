@@ -31,6 +31,7 @@ export default async function ProductList() {
                       alt={p.name}
                       fill
                       className="object-cover"
+                      unoptimized
                     />
                   )
                 }
@@ -46,7 +47,7 @@ export default async function ProductList() {
 
             <div className="card-body">
               <h2 className="card-title">{p.name}</h2>
-              <img
+              {/* <img
                 key={p.images?.[0]?.id || 'placeholder'}
                 src={(() => {
                   const firstImage = p.images?.[0]?.image
@@ -58,7 +59,7 @@ export default async function ProductList() {
                 alt={p.name}
                 width={200}
                 height={200}
-              />
+              /> */}
 
               <p>
                 {p.price} {p.currency.toUpperCase()}
