@@ -3,7 +3,15 @@
 
 import { useState } from 'react'
 
-export default function BuyButtons({ productId, stock }: { productId: string; stock: number }) {
+export default function BuyButtons({
+  productId,
+  stock,
+  price,
+}: {
+  productId: string
+  stock: number
+  price: number
+}) {
   const [loading, setLoading] = useState(false)
 
   const handleAddToCart = () => {
@@ -18,7 +26,7 @@ export default function BuyButtons({ productId, stock }: { productId: string; st
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, quantity: 5 }),
+        body: JSON.stringify({ productId, quantity: 1, price }),
       })
       if (!res.ok) throw new Error('建立訂單失敗')
       const url = await res.text()

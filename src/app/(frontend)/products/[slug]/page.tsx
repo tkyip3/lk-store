@@ -99,7 +99,7 @@ export default async function ProductDetail({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4">
           {product.images && product.images.length > 0 ? (
-            <div className="relative  w-full bg-base-200 rounded-lg overflow-hidden">
+            <div className="relative w-full bg-base-200 rounded-lg overflow-hidden">
               <ProductGallery images={galleryImages} />
             </div>
           ) : (
@@ -144,7 +144,11 @@ export default async function ProductDetail({
           )}
 
           <div className="mt-6">
-            <BuyButtons productId={String(product.id)} stock={product.stock ?? 0} />
+            <BuyButtons
+              productId={String(product.id)}
+              stock={product.stock ?? 0}
+              price={displayPrice}
+            />
           </div>
         </div>
       </div>
