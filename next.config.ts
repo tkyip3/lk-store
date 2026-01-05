@@ -18,6 +18,17 @@ const nextConfig = {
     return webpackConfig
   },
   turbopack: { resolveExtensions: ['.cts', '.cjs', '.ts', '.tsx', '.js', '.jsx', '.mts', '.mjs'] },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: process.env.NEXT_PUBLIC_PAYLOAD_API, // 或你图床的域名
+        // port: '', // 可选
+        // pathname: '/**', // 可选
+      },
+      // 若有其他域名也要加进来
+    ],
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })
