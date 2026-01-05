@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import type { Product } from '@/payload-types'
 
-async function getProducts() {
+async function getProducts(): Promise<{ docs: Product[] }> {
   const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[published][equals]=true&locale=zh-TW`
   const res = await fetch(url, { next: { revalidate: 30 } })
   if (!res.ok) throw new Error('Failed to fetch products')
