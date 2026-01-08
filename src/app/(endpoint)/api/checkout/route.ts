@@ -1,6 +1,7 @@
 import { Stripe } from 'stripe'
 
 export const POST = (req: Request) => {
+  console.log('req: ', req)
   return req
     .json<{ productId: string; quantity: number; price: number }>()
     .then(({ productId, quantity, price }) => {
