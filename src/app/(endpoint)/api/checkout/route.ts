@@ -18,10 +18,10 @@ export const POST = (req: Request) => {
                 price_data: {
                   currency: 'hkd',
                   product_data: {
-                    name: `ID(${productId})`,
+                    name: `ID(1)`,
                     images: [],
                   },
-                  unit_amount: Math.floor(price * 100),
+                  unit_amount: Math.floor(10 * 100),
                 },
                 quantity,
               },
