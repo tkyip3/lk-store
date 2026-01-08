@@ -18,7 +18,9 @@ export const POST = (req: Request) => {
         console.log(productId)
         console.log(quantity)
         console.log(price)
-        const stripe = new Stripe(process.env.PRIVATE_STRIPE_API_KEY)
+        const stripe = new Stripe(process.env.PRIVATE_STRIPE_API_KEY, {
+          httpClient: Stripe.createFetchHttpClient(),
+        })
 
         return Promise.race([
           stripe.checkout.sessions.create({
