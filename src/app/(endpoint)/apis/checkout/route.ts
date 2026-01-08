@@ -8,7 +8,12 @@ export const POST = (req: Request) => {
       // return req
       //   .json<{ productId: string; quantity: number; price: number }>()
       //   .then(({ productId, quantity, price }) =>
-      Promise.resolve().then(() => {
+      Promise.race([
+        Promise.resolve(),
+        new Promise((resolve) => setTimeout(resolve, 5000)).then(() => {
+          throw new Error('Timeout')
+        }),
+      ]).then(() => {
         const productId = String(data.get('productId')) || "Can't get productId"
         const quantity = Number(data.get('quantity')) || 0
         const price = Number(data.get('price')) || 999
