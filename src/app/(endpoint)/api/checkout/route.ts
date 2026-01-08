@@ -23,7 +23,7 @@ export const POST = (req: Request) => {
                   },
                   unit_amount: Math.floor(10 * 100),
                 },
-                quantity,
+                quantity: 1,
               },
             ],
             mode: 'payment',
