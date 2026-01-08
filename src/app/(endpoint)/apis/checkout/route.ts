@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation'
 import { Stripe } from 'stripe'
 
 export const POST = (req: Request) => {
@@ -53,8 +52,12 @@ export const POST = (req: Request) => {
     .then((session) => {
       console.log(session)
       console.log('done')
-      redirect(session.url)
-      // return new Response(session.url, { status: 307 })
+      return new Response(null, {
+        status: 303,
+        headers: {
+          Location: session.url,
+        },
+      })
     })
     .catch((e) => {
       console.error(e)
