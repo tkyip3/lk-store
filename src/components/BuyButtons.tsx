@@ -25,7 +25,7 @@ export default function BuyButtons({
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        // headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId, quantity: 1, price }),
       })
       if (!res.ok) throw new Error('建立訂單失敗')
