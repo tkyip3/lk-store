@@ -49,13 +49,15 @@ export default function BuyButtons({
         {stock === 0 ? '已售罄' : '加入購物車'}
       </button>
 
-      <button
-        className="btn btn-accent w-full"
-        disabled={stock === 0 || loading}
-        onClick={handleBuyNow}
-      >
-        {loading ? '處理中...' : '💳 馬上購買（Stripe 快速結帳）'}
-      </button>
+      <form action="/api/checkout" method="post">
+        <button
+          className="btn btn-accent w-full"
+          disabled={stock === 0 || loading}
+          // onClick={handleBuyNow}
+        >
+          {loading ? '處理中...' : '💳 馬上購買（Stripe 快速結帳）'}
+        </button>
+      </form>
     </div>
   )
 }

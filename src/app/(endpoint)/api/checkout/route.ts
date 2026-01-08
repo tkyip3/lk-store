@@ -1,16 +1,25 @@
+import { redirect } from 'next/navigation'
 import { Stripe } from 'stripe'
 
 export const POST = (req: Request) => {
   return req
-    .json<{ productId: string; quantity: number; price: number }>()
-    .then(({ productId, quantity, price }) =>
+    .formData()
+    .then((data) =>
+      // return req
+      //   .json<{ productId: string; quantity: number; price: number }>()
+      //   .then(({ productId, quantity, price }) =>
       Promise.resolve().then(() => {
+        const productId = String(data.get('productId')) || "Can't get productId"
+        const quantity = Number(data.get('quantity')) || 0
+        const price = Number(data.get('price')) || 999
+
         console.log('start')
         console.log(process.env.PRIVATE_STRIPE_API_KEY)
         console.log(productId)
         console.log(quantity)
         console.log(price)
-        return new Stripe(process.env.PRIVATE_STRIPE_API_KEY).checkout.sessions.create({
+        const stripe = new Stripe(process.env.PRIVATE_STRIPE_API_KEY)
+        return stripe.checkout.sessions.create({
           ui_mode: 'hosted',
           line_items: [
             {
@@ -27,14 +36,16 @@ export const POST = (req: Request) => {
           ],
           mode: 'payment',
           // return_url: 'http://localhost:3000/success',
-          success_url: 'http://localhost:3000/success',
-          cancel_url: 'http://localhost:3000/cancel',
+          // success_url: 'http://localhost:3000/success',
+          success_url: 'https://google.com',
+          cancel_url: 'https://google.com',
         })
       }),
     )
     .then((session) => {
       console.log(session)
       console.log('done')
-      return new Response(session.url)
+      redirect(session.url)
+      // return new Response(session.url, { status: 307 })
     })
 }
