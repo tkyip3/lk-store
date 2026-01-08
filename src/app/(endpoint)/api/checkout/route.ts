@@ -7,6 +7,10 @@ export const POST = (req: Request) => {
       return Promise.resolve()
         .then(() => {
           console.log('start')
+          console.log(process.env.PRIVATE_STRIPE_API_KEY)
+          console.log(productId)
+          console.log(quantity)
+          console.log(price)
           return new Stripe(process.env.PRIVATE_STRIPE_API_KEY).checkout.sessions.create({
             ui_mode: 'hosted',
             line_items: [
