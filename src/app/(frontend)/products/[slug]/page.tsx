@@ -67,6 +67,21 @@ export default async function ProductDetail({
       },
     }))
 
+  // const buyImages = (product.images ?? [])
+  //   .filter((img) => {
+  //     const image = img.image
+  //     return image && typeof image !== 'number' && typeof image === 'object' && image.url
+  //   })
+  //   .map(
+  //     (img) =>
+  //       'https://lk-store-production.tkyip3.workers.dev' + (img.image as { url: string }).url,
+  //   )
+
+  const buyImages =
+    galleryImages.length > 0
+      ? [process.env.NEXT_PUBLIC_PAYLOAD_API + galleryImages[0].image.url]
+      : []
+
   const handleBuyNow = async () => {
     try {
       const res = await fetch('/api/checkout', {
@@ -104,7 +119,7 @@ export default async function ProductDetail({
             </div>
           ) : (
             <div className="aspect-square w-full bg-base-200 rounded-lg flex items-center justify-center">
-              <span className="text-gray-500">无图片</span>
+              <span className="text-gray-500">無圖片</span>
             </div>
           )}
 
@@ -133,7 +148,7 @@ export default async function ProductDetail({
           {product.stock === 0 ? (
             <span className="badge badge-error mb-4">售罄</span>
           ) : (
-            <span className="badge badge-success mb-4">库存：{product.stock}</span>
+            <span className="badge badge-success mb-4">庫存：{product.stock}</span>
           )}
 
           {product.description && (
@@ -145,9 +160,11 @@ export default async function ProductDetail({
 
           <div className="mt-6">
             <BuyButtons
+              productName={String(product.name)}
               productId={String(product.id)}
               stock={product.stock ?? 0}
               price={parseFloat(displayPrice)}
+              images={buyImages}
             />
           </div>
         </div>

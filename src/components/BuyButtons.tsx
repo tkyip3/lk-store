@@ -4,13 +4,17 @@
 import { useState } from 'react'
 
 export default function BuyButtons({
+  productName,
   productId,
   stock,
   price,
+  images,
 }: {
+  productName: string
   productId: string
   stock: number
   price: number
+  images: string[]
 }) {
   const [loading, setLoading] = useState(false)
 
@@ -45,11 +49,17 @@ export default function BuyButtons({
 
   return (
     <div className="mt-6 flex flex-col gap-3">
-      <button className="btn btn-primary w-full" disabled={stock === 0} onClick={handleAddToCart}>
+      {/* <button className="btn btn-primary w-full" disabled={stock === 0} onClick={handleAddToCart}>
         {stock === 0 ? '已售罄' : '加入購物車'}
-      </button>
+      </button> */}
 
       <form action="/apis/checkout" method="post">
+        <input type="hidden" name="productName" value={productName} />
+        <input type="hidden" name="productId" value={productId} />
+        <input type="hidden" name="quantity" value="1" />
+        <input type="hidden" name="price" value={price} />
+        <input type="hidden" name="images" value={JSON.stringify(images)} />
+
         <button
           className="btn btn-accent w-full"
           disabled={stock === 0 || loading}
