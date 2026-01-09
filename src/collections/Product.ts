@@ -54,6 +54,16 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: 'categories',
+      type: 'relationship',
+      relationTo: 'categories',
+      hasMany: true,
+      label: {
+        'zh-TW': '分類',
+        en: 'Categories',
+      },
+    },
+    {
       name: 'description',
       type: 'textarea',
       label: {

@@ -1,0 +1,58 @@
+import type { Access, CollectionConfig } from 'payload'
+
+const readAccess: Access = ({ req }) => {
+  // return req.user.role === 'admin'
+  return true
+} // ✅ 允許未登入者讀取
+
+export const Category: CollectionConfig = {
+  slug: 'categories',
+  access: {
+    read: readAccess, // ✅ 允許未登入者讀取
+  },
+  admin: { useAsTitle: 'name' },
+  fields: [
+    {
+      name: 'name',
+      type: 'text',
+      required: true,
+      label: {
+        'zh-TW': '纇別名稱',
+        en: 'Product Name',
+      },
+      localized: true,
+    },
+    // {
+    //   name: 'virtual-button',
+    //   type: 'ui',
+    //   label: 'Link',
+    //   admin: { components: { Field: () => '🔗 /products/{slug}' } },
+    // },
+    {
+      name: 'slug',
+      type: 'text',
+      required: true,
+      label: {
+        'zh-TW': '網址代碼',
+        en: 'Slug',
+      },
+    },
+    {
+      name: 'description',
+      type: 'textarea',
+      label: {
+        'zh-TW': '貨品描述',
+        en: 'Description',
+      },
+    },
+    {
+      name: 'published',
+      type: 'checkbox',
+      defaultValue: true,
+      label: {
+        'zh-TW': '公開',
+        en: 'Published',
+      },
+    },
+  ],
+}
