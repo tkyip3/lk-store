@@ -13,6 +13,19 @@
       background-position: var(--bg-size) var(--bg-size);
     }
   }
+
+  --animate-logo-scale: logo-scale 0.6s ease-in-out;
+
+  @keyframes logo-scale {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    30% {
+      transform: scale(0.95);
+    }
+  }
 }
 
 html {
@@ -58,13 +71,13 @@ header {
     .wrapper-main {
       @apply flex items-center justify-between size-full relative px-8;
       .logo {
-        @apply inset-0 w-40;
+        @apply inset-0 w-40 hover:animate-logo-scale;
       }
 
       .header-menu {
         @apply flex items-center h-full;
         .menu-item {
-          @apply flex text-white h-full items-center hover:bg-yellow-300/70 duration-300 ease-in-out p-4;
+          @apply flex text-white h-full items-center hover:bg-yellow-300/70 duration-300 ease-in-out p-4 border-1 border-l-gray-500 border-r-gray-600 border-transparent hover:border-t-gray-500 hover:border-b-gray-600;
         }
       }
     }
