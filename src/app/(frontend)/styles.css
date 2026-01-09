@@ -1,2 +1,72 @@
 @import 'tailwindcss';
 @plugin "daisyui";
+
+@theme {
+  --bg-size: 320px;
+  --animate-loop-bg: loop-bg 10s linear infinite;
+  @keyframes loop-bg {
+    0% {
+      background-position: 0% 0%;
+    }
+
+    100% {
+      background-position: var(--bg-size) var(--bg-size);
+    }
+  }
+}
+
+html {
+  @apply bg-[url('/images/common/bg.svg')] animate-loop-bg bg-size-(--bg-size) bg-fixed bg-center;
+}
+
+body {
+  @apply px-4;
+}
+
+.liquidGlass-wrapper {
+  @apply relative size-full flex font-semibold shadow-lg transition-all duration-300 ease-[cubic-bezier(0.175,0.885,0.32,2.2)];
+
+  .liquidGlass-effect {
+    @apply absolute z-0 backdrop-blur-xs overflow-hidden inset-0;
+    filter: url(#glass-distortion);
+  }
+
+  .liquidGlass-tint {
+    @apply z-1 absolute inset-0 bg-white/5;
+  }
+
+  .liquidGlass-shine {
+    @apply absolute z-2 overflow-hidden inset-shadow-sm inset-shadow-gray-100 inset-0;
+  }
+
+  .liquidGlass-main {
+    @apply z-3 w-full;
+  }
+}
+
+header {
+  @apply my-14;
+  .header-wrapper {
+    @apply h-16;
+    .liquidGlass-wrapper {
+      .liquidGlass-effect,
+      .liquidGlass-tint,
+      .liquidGlass-shine {
+        @apply rounded-[32px];
+      }
+    }
+    .wrapper-main {
+      @apply flex items-center justify-between size-full relative px-8;
+      .logo {
+        @apply inset-0 w-40;
+      }
+
+      .header-menu {
+        @apply flex items-center h-full;
+        .menu-item {
+          @apply flex text-white h-full items-center hover:bg-yellow-300/70 duration-300 ease-in-out p-4;
+        }
+      }
+    }
+  }
+}
