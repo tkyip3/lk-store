@@ -38,6 +38,15 @@ export const Category: CollectionConfig = {
       },
     },
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      label: {
+        'zh-TW': '分類圖片',
+        en: 'Category Image',
+      },
+    },
+    {
       name: 'description',
       type: 'textarea',
       label: {
