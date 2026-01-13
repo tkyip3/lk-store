@@ -11,6 +11,7 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Products } from './collections/Product'
 import { Category } from './collections/Category'
+import { Tag } from './collections/Tag'
 import { en, enTranslations } from '@payloadcms/translations/languages/en'
 import { zh, zhTranslations } from '@payloadcms/translations/languages/zh'
 import { zhTw, zhTwTranslations } from '@payloadcms/translations/languages/zhTw'
@@ -29,7 +30,7 @@ const cloudflare =
     : await getCloudflareContext({ async: true })
 
 const productPlugin: Plugin = (config) => {
-  config.collections = [...config.collections, Products, Category]
+  config.collections = [...config.collections, Products, Category, Tag]
   return config
 }
 

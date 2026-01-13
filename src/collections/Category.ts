@@ -17,8 +17,8 @@ export const Category: CollectionConfig = {
       type: 'text',
       required: true,
       label: {
-        'zh-TW': '纇別名稱',
-        en: 'Product Name',
+        'zh-TW': '分類名稱',
+        en: 'Category Name',
       },
       localized: true,
     },

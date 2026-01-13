@@ -64,6 +64,16 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: 'tags',
+      type: 'relationship',
+      relationTo: 'tags',
+      hasMany: true,
+      label: {
+        'zh-TW': '標籤',
+        en: 'Tags',
+      },
+    },
+    {
       name: 'description',
       type: 'textarea',
       label: {
