@@ -46,7 +46,16 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-3xl font-bold text-center mb-8">🛍️ 分類：{category.name}</h1>
+      {typeof category.image === 'object' && category.image?.url && (
+        <div className="flex aspect-5/1 mb-4">
+          <div className="relative w-3/5 ">
+            <Image src={category.image.url} alt={category.name} fill className="object-cover" />
+          </div>
+          <div className="flex text-2xl items-center justify-center w-2/5 font-bold p-4 bg-gray-700">
+            {category.name}
+          </div>
+        </div>
+      )}
 
       {products.length === 0 ? (
         <p className="text-center text-gray-500">此分類下無商品</p>
