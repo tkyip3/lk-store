@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
+import { FreeMode, Pagination } from 'swiper/modules'
 import Image from 'next/image' // 引入 next/image
 import Link from 'next/link'
 
@@ -11,7 +11,7 @@ import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
-import { L } from 'vitest/dist/chunks/reporters.d.DL9pg5DB.js'
+import 'swiper/css/pagination'
 
 type ImageItem = {
   slug: string
@@ -47,8 +47,8 @@ export default function HomeSwiper({ images }: HomeSwiperProps) {
           } as React.CSSProperties
         }
         spaceBetween={10}
-        navigation={true}
-        modules={[FreeMode, Navigation]}
+        pagination={true}
+        modules={[FreeMode, Pagination]}
         className="overflow-hidden"
       >
         {images.map((item, i) => (

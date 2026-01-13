@@ -145,19 +145,33 @@ export default async function ProductDetail({
             {product.currency?.toUpperCase()} {displayPrice}
           </p>
 
+          {product.categories.length > 0 && (
+            <div>
+              {product.categories.map((cat) => {
+                if (typeof cat === 'number') return null
+                return (
+                  <Link
+                    key={cat.id}
+                    href={`/categories/${cat.slug}`}
+                    className="badge badge-primary mb-2 mr-2 hover:shadow-md/30 hover:-translate-y-[2px] transition"
+                  >
+                    {cat.name}
+                  </Link>
+                )
+              })}
+            </div>
+          )}
           {product.stock === 0 ? (
             <span className="badge badge-error mb-4">售罄</span>
           ) : (
             <span className="badge badge-success mb-4">庫存：{product.stock}</span>
           )}
-
           {product.description && (
             <div className="prose max-w-none mb-6">
               <h3 className="font-semibold">商品描述</h3>
               <pre>{product.description}</pre>
             </div>
           )}
-
           <div className="mt-6">
             <BuyButtons
               productName={String(product.name)}

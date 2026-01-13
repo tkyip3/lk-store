@@ -4,6 +4,7 @@ import Image from 'next/image'
 
 import type { Product, Category } from '@/payload-types'
 import HomeSwiper from '@/components/HomeSwiper'
+import ProductItem from '@/components/ProductItem'
 
 import './styles.css'
 
@@ -42,37 +43,7 @@ export default async function HomePage() {
           <div className="divider text-4xl my-8 font-bold">最新商品</div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {products.map((p: Product) => (
-              <div key={p.id} className="card bg-base-100/50 backdrop-blur-sm w-full shadow-sm">
-                <figure className="hover-gallery aspect-square relative">
-                  {p.images?.map((img) => {
-                    if (typeof img.image === 'object' && img.image?.url) {
-                      return (
-                        <Image
-                          key={img.id}
-                          src={img.image.url}
-                          alt={p.name}
-                          fill
-                          className="object-cover"
-                          unoptimized
-                        />
-                      )
-                    }
-                  })}
-                </figure>
-
-                <div className="card-body">
-                  <h2 className="card-title">{p.name}</h2>
-
-                  <p>
-                    {p.price} {p.currency.toUpperCase()}
-                  </p>
-                  <div className="card-actions justify-end">
-                    <Link href={`/products/${p.slug}`} className="btn btn-primary">
-                      查看詳情
-                    </Link>
-                  </div>
-                </div>
-              </div>
+              <ProductItem key={p.id} product={p} />
             ))}
           </div>
         </div>

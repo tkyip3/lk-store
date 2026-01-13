@@ -42,7 +42,7 @@ export const Category: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       label: {
-        'zh-TW': '分類圖片',
+        'zh-TW': '分類圖片 (比例 3:1)',
         en: 'Category Image',
       },
     },
