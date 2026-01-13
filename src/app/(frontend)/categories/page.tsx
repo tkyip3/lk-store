@@ -34,6 +34,7 @@ export default async function ProductList() {
                   alt={c.name}
                   fill
                   className="object-cover"
+                  unoptimized
                 />
               )}
             </div>
