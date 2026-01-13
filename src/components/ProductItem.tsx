@@ -29,7 +29,13 @@ export default function ProductItem({ product }: { product: Product }) {
         ) : p.images.length === 1 ? (
           <figure className="aspect-square relative">
             {typeof p.images[0].image === 'object' && p.images[0].image?.url && (
-              <Image src={p.images[0].image.url} alt={p.name} fill className="object-cover" />
+              <Image
+                src={p.images[0].image.url}
+                alt={p.name}
+                fill
+                className="object-cover"
+                unoptimized
+              />
             )}
           </figure>
         ) : (
