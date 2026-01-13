@@ -31,8 +31,9 @@ async function getProductsByCategoryId(categoryId: string): Promise<{ docs: Prod
   return res.json() as Promise<ApiResponse<Product>>
 }
 
-export default async function CategoryPage({ params }: { params: { slug: string } }) {
-  const { slug } = params
+export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params
+  const { slug } = resolvedParams
 
   // Step 1: 找 category
   const category = await getCategoryBySlug(slug)
