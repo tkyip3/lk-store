@@ -49,9 +49,15 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       {typeof category.image === 'object' && category.image?.url && (
         <div className="flex aspect-5/1 mb-4">
           <div className="relative w-3/5 ">
-            <Image src={category.image.url} alt={category.name} fill className="object-cover" />
+            <Image
+              src={category.image.url}
+              alt={category.name}
+              fill
+              className="object-cover"
+              unoptimized
+            />
           </div>
-          <div className="flex text-2xl items-center justify-center w-2/5 font-bold p-4 bg-gray-700">
+          <div className="flex text-2xl items-center justify-center w-2/5 font-bold p-4 bg-gray-700 text-center">
             {category.name}
           </div>
         </div>

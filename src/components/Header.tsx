@@ -3,6 +3,8 @@
 import GlassFilter from '@/components/GlassFilter'
 import { useState } from 'react'
 
+import { Icon } from '@iconify/react'
+
 export default function Header() {
   const [menuActive, setMenuActive] = useState(false)
 
@@ -26,9 +28,12 @@ export default function Header() {
                 <a href="/categories" className="menu-item">
                   所有分類
                 </a>
+                <button onClick={() => setMenuActive(false)} className="header-close">
+                  <Icon icon="line-md:close" width="1.6em" height="1.6em" />
+                </button>
               </div>
-              <button onClick={menuToggle} className="header-btn">
-                選單
+              <button onClick={() => setMenuActive(true)} className="header-btn">
+                <Icon icon="line-md:close-to-menu-transition" width="1.6em" height="1.6em" />
               </button>
             </div>
           </GlassFilter>
