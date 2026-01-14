@@ -54,7 +54,7 @@ export default function HomeSwiper({ images }: HomeSwiperProps) {
         {images.map((item, i) => (
           <SwiperSlide key={i}>
             <div className="relative aspect-3/1 w-full">
-              <Link href={`/category/${item.slug}`}>
+              <Link href={`/categories/${item.slug}`}>
                 <Image
                   src={item.image.url}
                   alt={item.image.alt || `商品图片 ${i + 1}`}
