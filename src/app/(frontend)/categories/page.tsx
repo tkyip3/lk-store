@@ -4,7 +4,6 @@ import Image from 'next/image'
 
 import type { Category } from '@/payload-types'
 
-import styles from './page.module.css'
 async function getCategories(): Promise<{ docs: Category[] }> {
   const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/categories?where[published][equals]=true&locale=zh-TW&sort=name`
   const res = await fetch(url, { next: { revalidate: 30 } })

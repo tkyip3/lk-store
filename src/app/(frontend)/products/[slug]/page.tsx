@@ -8,6 +8,7 @@ import ProductGallery from '@/components/ProductGallery'
 
 import type { Metadata } from 'next'
 import type { Product } from '@/payload-types'
+import { Icon } from '@iconify/react'
 
 async function getProductBySlug(slug: string): Promise<Product | null> {
   const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[slug][equals]=${encodeURIComponent(slug)}&locale=zh-TW`
@@ -53,7 +54,7 @@ export default async function ProductDetail({
     )
   }
 
-  const displayPrice = product.price.toFixed(2)
+  const displayPrice = product.price.toFixed(0)
   const galleryImages = (product.images ?? [])
     .filter((img) => {
       const image = img.image
@@ -107,19 +108,15 @@ export default async function ProductDetail({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Link href="/products" className="btn btn-ghost btn-sm mb-4">
-        ← 返回列表
-      </Link>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4">
           {product.images && product.images.length > 0 ? (
-            <div className="relative w-full bg-base-200 rounded-lg overflow-hidden">
+            <div className="relative w-full bg-gray-900/50 rounded-lg overflow-hidden backdrop-blur-sm">
               <ProductGallery images={galleryImages} />
             </div>
           ) : (
-            <div className="aspect-square w-full bg-base-200 rounded-lg flex items-center justify-center">
-              <span className="text-gray-500">無圖片</span>
+            <div className="aspect-square w-full bg-gray-900/50 rounded-lg flex items-center justify-center backdrop-blur-sm">
+              <Icon icon="line-md:image-twotone" width="6em" height="6em" />
             </div>
           )}
 
@@ -140,11 +137,12 @@ export default async function ProductDetail({
         </div>
 
         <div>
-          <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-          <p className="text-xl font-semibold mb-4">
-            {product.currency?.toUpperCase()} {displayPrice}
-          </p>
-
+          {product.stock === 0 ? (
+            <span className="badge badge-error mb-4">售罄</span>
+          ) : (
+            <span className="badge badge-success mb-4">有現貨</span>
+          )}
+          <h1 className="text-xl font-bold mb-2">{product.name}</h1>
           {product.categories.length > 0 && (
             <div>
               {product.categories.map((cat) => {
@@ -161,14 +159,15 @@ export default async function ProductDetail({
               })}
             </div>
           )}
-          {product.stock === 0 ? (
-            <span className="badge badge-error mb-4">售罄</span>
-          ) : (
-            <span className="badge badge-success mb-4">庫存：{product.stock}</span>
-          )}
+          <p className="text-3xl font-black mb-8">
+            {product.currency?.toUpperCase()} {displayPrice}
+          </p>
+
           {product.description && (
             <div className="prose max-w-none mb-6">
-              <h3 className="font-semibold">商品描述</h3>
+              <div className="divider divider-start font-bold text-xl divider-primary">
+                商品描述
+              </div>
               <pre>{product.description}</pre>
             </div>
           )}
