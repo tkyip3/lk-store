@@ -4,6 +4,7 @@
 @theme {
   --bg-size: 320px;
   --animate-loop-bg: loop-bg 10s linear infinite;
+  --font-Noto-Sans-HK: 'Noto Sans HK', sans-serif;
   @keyframes loop-bg {
     0% {
       background-position: 0% 0%;
@@ -28,8 +29,14 @@
   }
 }
 
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
 html {
-  @apply bg-[url('/images/common/bg.svg')] animate-loop-bg bg-size-(--bg-size) bg-fixed bg-center;
+  @apply bg-[url('/images/common/bg.svg')] animate-loop-bg bg-size-(--bg-size) bg-fixed bg-center font-Noto-Sans-HK;
 }
 
 body {

@@ -29,7 +29,7 @@ export async function generateMetadata({
   const product = await getProductBySlug(slug)
 
   return {
-    title: product ? `${product.name} | 商店` : '商品未找到',
+    title: product ? `${product.name} | HK LK Store` : '商品未找到',
     description: product?.description || '商品详情',
   }
 }

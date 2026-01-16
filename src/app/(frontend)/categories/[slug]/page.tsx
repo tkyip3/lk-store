@@ -5,11 +5,25 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import ProductItem from '@/components/ProductItem'
 import type { Product, Category } from '@/payload-types'
+import type { Metadata } from 'next'
 
 interface ApiResponse<T> {
   docs: T[]
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }> // ✅ Promise<>
+}): Promise<Metadata> {
+  const { slug } = await params // 👈 await 解包
+  const category = await getCategoryBySlug(slug)
+
+  return {
+    title: category ? `${category.name} | HK LK Store` : '商品未找到',
+    description: category?.description || '商品详情',
+  }
+}
 async function getCategoryBySlug(slug: string): Promise<Category | null> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/categories?where[slug][equals]=${encodeURIComponent(slug)}&limit=1`,
