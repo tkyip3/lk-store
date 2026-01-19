@@ -8,6 +8,11 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   description: 'HK LK Store 網上商店',
   title: 'HK LK Store',
+  openGraph: {
+    description: 'HK LK Store 網上商店',
+    title: 'HK LK Store',
+    images: `${process.env.NEXT_PUBLIC_PAYLOAD_API}/images/header/logo.png`,
+  },
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

@@ -29,8 +29,19 @@ export async function generateMetadata({
   const product = await getProductBySlug(slug)
 
   return {
-    title: product ? `${product.name} | HK LK Store` : '商品未找到',
+    title: product ? `${product.name} | HK LK Store 網上商店` : '商品未找到',
     description: product?.description || '商品详情',
+    openGraph: {
+      title: product ? `${product.name} | HK LK Store 網上商店` : '商品未找到',
+      description: product?.description || '商品详情',
+      images:
+        product.images &&
+        product.images[0].image &&
+        typeof product.images[0].image === 'object' &&
+        'url' in product.images[0].image
+          ? `${process.env.NEXT_PUBLIC_PAYLOAD_API}${(product.images[0].image as { url: string }).url}`
+          : undefined,
+    },
   }
 }
 
