@@ -27,6 +27,36 @@
       transform: scale(0.95);
     }
   }
+
+  --animate-vibrate: vibrate 60s ease-in-out infinite;
+  --animate-vibrate-dist: 0.1em;
+
+  @keyframes vibrate {
+    0%,
+    100% {
+      transform: translate(0);
+    }
+    10%,
+    50%,
+    80% {
+      transform: translate(
+        calc(-1 * var(--animate-vibrate-dist)),
+        calc(-1 * var(--animate-vibrate-dist))
+      );
+    }
+    20%,
+    60%,
+    90% {
+      transform: translate(var(--animate-vibrate-dist), calc(-1 * var(--animate-vibrate-dist)));
+    }
+    30%,
+    70% {
+      transform: translate(calc(-1 * var(--animate-vibrate-dist)), var(--animate-vibrate-dist));
+    }
+    40% {
+      transform: translate(var(--animate-vibrate-dist), var(--animate-vibrate-dist));
+    }
+  }
 }
 
 @keyframes blinker {
@@ -96,6 +126,16 @@ header {
       .header-btn {
         @apply sm:hidden cursor-pointer bg-gray-700/80 hover:bg-yellow-300/70 p-2 rounded-full transition-all duration-300 ease-in-out hover:inset-shadow-sm inset-shadow-gray-900/70;
       }
+    }
+  }
+}
+
+.tags-cloud {
+  @apply cursor-pointer;
+  div {
+    @apply inline-block rounded-full m-1;
+    span {
+      @apply px-[.4em] text-gray-900;
     }
   }
 }
