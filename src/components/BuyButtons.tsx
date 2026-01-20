@@ -17,6 +17,7 @@ export default function BuyButtons({
   images: string[]
 }) {
   const [loading, setLoading] = useState(false)
+  const [quantity, setQuantity] = useState(1)
 
   const handleAddToCart = () => {
     // TODO: 實作加入購物車（可呼叫 /api/cart）
@@ -30,7 +31,7 @@ export default function BuyButtons({
       const res = await fetch('/apis/checkout', {
         method: 'POST',
         // headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, quantity: 1, price }),
+        body: JSON.stringify({ productId, quantity, price }),
       })
       if (!res.ok) throw new Error('建立訂單失敗')
       const url = await res.text()
@@ -56,9 +57,25 @@ export default function BuyButtons({
       <form action="/apis/checkout" method="post">
         <input type="hidden" name="productName" value={productName} />
         <input type="hidden" name="productId" value={productId} />
-        <input type="hidden" name="quantity" value="1" />
+        <input type="hidden" name="quantity" value={quantity} />
         <input type="hidden" name="price" value={price} />
         <input type="hidden" name="images" value={JSON.stringify(images)} />
+
+        {stock > 1 && (
+          <label htmlFor="" className="input w-full mb-2">
+            <span className="label">購買數量</span>
+            <input
+              className=""
+              type="number"
+              value={quantity}
+              onChange={(e) => {
+                const val = parseInt(e.target.value, 10)
+                const q = isNaN(val) ? 1 : val
+                setQuantity(Math.min(stock, Math.max(1, q)))
+              }}
+            />
+          </label>
+        )}
 
         <button
           className="btn btn-accent w-full"

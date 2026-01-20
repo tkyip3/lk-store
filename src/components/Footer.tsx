@@ -10,7 +10,15 @@ export default function Footer() {
       <GlassFilter>
         <div className="container p-4 mx-auto">
           <div className="footer-top text-center flex justify-center gap-4 mb-4">
-            <Link href={'#'}>
+            <Link href={'https://www.carousell.com.hk/u/arlok324/'} target="_blank">
+              <Icon
+                className="hover:text-yellow-300 transition-all duration-300 ease-in-out"
+                icon="arcticons:carousell"
+                width="2em"
+                height="2em"
+              />
+            </Link>
+            <Link href={'https://ebay.us/m/RFMXtf'} target="_blank">
               <Icon
                 className="hover:text-yellow-300 transition-all duration-300 ease-in-out"
                 icon="arcticons:ebay"
@@ -18,18 +26,11 @@ export default function Footer() {
                 height="2em"
               />
             </Link>
+            <div className="divider divider-horizontal mx-0"></div>
             <Link href={'https://wa.me/85294667228?text='} target="_blank">
               <Icon
                 className="hover:text-yellow-300 transition-all duration-300 ease-in-out"
                 icon="arcticons:whatsapp"
-                width="2em"
-                height="2em"
-              />
-            </Link>
-            <Link href={'https://www.carousell.com.hk/u/arlok324/'} target="_blank">
-              <Icon
-                className="hover:text-yellow-300 transition-all duration-300 ease-in-out"
-                icon="arcticons:carousell"
                 width="2em"
                 height="2em"
               />

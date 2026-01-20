@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { Stripe } from 'stripe'
 
+export const FREIDHGT_PREPAID_COST = 30
 export const POST = (req: Request) => {
   return req
     .formData()
@@ -45,6 +46,68 @@ export const POST = (req: Request) => {
             shipping_address_collection: {
               allowed_countries: ['HK'],
             },
+            shipping_options: [
+              {
+                shipping_rate_data: {
+                  type: 'fixed_amount',
+                  fixed_amount: {
+                    amount: 0,
+                    currency: 'hkd',
+                  },
+                  display_name: '順豐速運 (運費到付)',
+                  delivery_estimate: {
+                    minimum: {
+                      unit: 'business_day',
+                      value: 1,
+                    },
+                    maximum: {
+                      unit: 'business_day',
+                      value: 5,
+                    },
+                  },
+                },
+              },
+              {
+                shipping_rate_data: {
+                  type: 'fixed_amount',
+                  fixed_amount: {
+                    amount: FREIDHGT_PREPAID_COST * 100,
+                    currency: 'hkd',
+                  },
+                  display_name: '順豐速運 (運費預付)',
+                  delivery_estimate: {
+                    minimum: {
+                      unit: 'business_day',
+                      value: 1,
+                    },
+                    maximum: {
+                      unit: 'business_day',
+                      value: 5,
+                    },
+                  },
+                },
+              },
+              {
+                shipping_rate_data: {
+                  type: 'fixed_amount',
+                  fixed_amount: {
+                    amount: 0,
+                    currency: 'hkd',
+                  },
+                  display_name: '自取',
+                  delivery_estimate: {
+                    minimum: {
+                      unit: 'business_day',
+                      value: 1,
+                    },
+                    maximum: {
+                      unit: 'business_day',
+                      value: 3,
+                    },
+                  },
+                },
+              },
+            ],
             phone_number_collection: {
               enabled: true,
             },
