@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { Stripe } from 'stripe'
 
-export const FREIDHGT_PREPAID_COST = 30
+const FREIDHGT_PREPAID_COST = 30
 export const POST = (req: Request) => {
   return req
     .formData()
