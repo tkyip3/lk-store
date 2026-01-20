@@ -202,6 +202,7 @@ export interface Category {
   id: number;
   name: string;
   slug: string;
+  order?: number | null;
   image?: (number | null) | Media;
   description?: string | null;
   published?: boolean | null;
@@ -375,6 +376,7 @@ export interface ProductsSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  order?: T;
   image?: T;
   description?: T;
   published?: T;

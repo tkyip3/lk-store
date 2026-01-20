@@ -38,6 +38,15 @@ export const Category: CollectionConfig = {
       },
     },
     {
+      name: 'order',
+      type: 'number',
+      defaultValue: 9999,
+      label: {
+        'zh-TW': '索引編號',
+        en: 'Order Number',
+      },
+    },
+    {
       name: 'image',
       type: 'upload',
       relationTo: 'media',

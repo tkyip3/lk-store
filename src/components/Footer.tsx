@@ -13,6 +13,14 @@ export default function Footer() {
             <Link href={'#'}>
               <Icon
                 className="hover:text-yellow-300 transition-all duration-300 ease-in-out"
+                icon="arcticons:ebay"
+                width="2em"
+                height="2em"
+              />
+            </Link>
+            <Link href={'https://wa.me/85294667228?text='} target="_blank">
+              <Icon
+                className="hover:text-yellow-300 transition-all duration-300 ease-in-out"
                 icon="arcticons:whatsapp"
                 width="2em"
                 height="2em"

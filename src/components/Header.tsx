@@ -28,6 +28,9 @@ export default function Header() {
                 <a href="/categories" className="menu-item">
                   所有分類
                 </a>
+                <a href="/admin" className="menu-item">
+                  管理員登入
+                </a>
                 <button onClick={() => setMenuActive(false)} className="header-close">
                   <Icon icon="line-md:close" width="1.6em" height="1.6em" />
                 </button>
