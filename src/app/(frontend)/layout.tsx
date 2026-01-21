@@ -30,7 +30,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       </head>
       <body>
         <Header />
-        <main>{children}</main>
+        <main className="min-h-[calc(100vh-312px)]">{children}</main>
         <Footer />
       </body>
     </html>
