@@ -1,6 +1,7 @@
 // app/components/TagCloudClient.tsx
 'use client'
 
+import { useRouter, useSearchParams } from 'next/navigation'
 import { TagCloud } from 'react-tagcloud'
 
 interface TagItem {
@@ -27,6 +28,7 @@ const options = {
 } as const
 
 export default function TagCloudClient({ tags }: { tags: TagItem[] }) {
+  const router = useRouter()
   return (
     <TagCloud
       minSize={5}
@@ -35,7 +37,7 @@ export default function TagCloudClient({ tags }: { tags: TagItem[] }) {
       className="tags-cloud"
       colorOptions={options}
       renderer={customRenderer}
-      onClick={(tag) => window.open(`/tags/${tag.value}`)}
+      onClick={(tag) => router.push(`/tags/${tag.value}`)}
     />
   )
 }

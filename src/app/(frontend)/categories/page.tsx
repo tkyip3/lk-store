@@ -5,7 +5,7 @@ import Image from 'next/image'
 import type { Category } from '@/payload-types'
 
 async function getCategories(): Promise<{ docs: Category[] }> {
-  const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/categories?where[published][equals]=true&locale=zh-TW&sort=order`
+  const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/categories?where[published][equals]=true&locale=zh-TW&sort=order&limit=0`
   const res = await fetch(url, { next: { revalidate: 30 } })
   if (!res.ok) throw new Error('Failed to fetch categories')
   return res.json()

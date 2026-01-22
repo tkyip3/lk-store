@@ -8,7 +8,7 @@ import type { Product, Category } from '@/payload-types'
 import type { Metadata } from 'next'
 import ProductPagination from '@/components/ProductPagination'
 
-const PER_PAGE = 4
+const PER_PAGE = 12
 
 interface ApiResponse<T> {
   docs: T[]

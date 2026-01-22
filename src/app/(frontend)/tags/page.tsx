@@ -15,7 +15,7 @@ interface TagItem {
 }
 
 async function getProducts(): Promise<{ docs: Product[] }> {
-  const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[published][equals]=true&locale=zh-TW`
+  const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[published][equals]=true&locale=zh-TW&limit=0`
   const res = await fetch(url, {
     cache: 'no-store', // 不缓存，每次请求都重新获取
   })
