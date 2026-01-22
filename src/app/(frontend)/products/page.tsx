@@ -6,7 +6,6 @@ const PER_PAGE = 12
 
 interface ProductsResponse {
   docs: Product[]
-  totalDocs: number
   totalPages: number // Payload 会返回 totalPages
 }
 
@@ -22,20 +21,13 @@ async function getProducts(page: number): Promise<ProductsResponse> {
   return res.json()
 }
 
-async function getTotalCount(): Promise<number> {
-  const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[published][equals]=true&locale=zh-TW&limit=0`
-  const res = await fetch(url, { next: { revalidate: 30 } })
-  const data = (await res.json()) as { totalDocs: number }
-  return data.totalDocs || 0
-}
-
 export default async function ProductList({
   searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined }
 }) {
   const page = Math.max(1, parseInt(searchParams?.page as string) || 1)
-  const { docs: products, totalDocs, totalPages } = await getProducts(page)
+  const { docs: products, totalPages } = await getProducts(page)
 
   return (
     <div className="container mx-auto px-4 py-8">

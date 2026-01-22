@@ -6,9 +6,15 @@ import { useEffect, useState } from 'react'
 
 interface ProductPaginationProps {
   totalPages: number
+  type?: 'products' | 'categories' | 'tags'
+  typeId?: string
 }
 
-export default function ProductPagination({ totalPages }: ProductPaginationProps) {
+export default function ProductPagination({
+  totalPages,
+  type = 'products',
+  typeId,
+}: ProductPaginationProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const currentPage = parseInt(searchParams.get('page') || '1', 10)
@@ -22,7 +28,11 @@ export default function ProductPagination({ totalPages }: ProductPaginationProps
 
   const goToPage = (page: number) => {
     if (page < 1 || page > totalPages) return
-    router.push(`/products?page=${page}`)
+    if (type === 'products') {
+      router.push(`/products?page=${page}`)
+    } else {
+      router.push(`/${type}/${typeId}?page=${page}`)
+    }
   }
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -48,7 +58,8 @@ export default function ProductPagination({ totalPages }: ProductPaginationProps
         {/* 页码选择器 */}
         <select
           id="page-selector"
-          className="join-item select w-26 pl-6 pr-2 appearance-none bg-none"
+          name="page-selector"
+          className="join-item select select-bordered w-26 pl-6 pr-2 appearance-none bg-none"
           value={selectedPage}
           onChange={handleSelectChange}
         >
