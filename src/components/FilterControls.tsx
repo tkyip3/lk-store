@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { ChangeEvent } from 'react'
 
 interface FilterControlsProps {
-  categories: Array<{ id: string; title: string; name: string }>
+  categories: Array<{ id: string; title?: string; name: string }>
   tags: Array<{ id: string; name: string }>
 }
 
