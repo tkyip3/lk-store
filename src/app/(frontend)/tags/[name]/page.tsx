@@ -58,7 +58,7 @@ export default async function TagPage({
   searchParams,
 }: {
   params: Promise<{ name: string }>
-  searchParams?: { [key: string]: string | string[] | undefined }
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const resolvedParams = await params
   const { name } = resolvedParams
