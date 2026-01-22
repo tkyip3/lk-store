@@ -114,8 +114,8 @@ export const POST = (req: Request) => {
             //shipping_options: getShippingOptions(locale, cart.shipping).map(({ option }) => option),
             // return_url: 'http://localhost:3000/success',
             // success_url: 'http://localhost:3000/success',
-            success_url: 'http://localhost:3000//checkout/success',
-            cancel_url: 'http://localhost:3000//checkout/cancel',
+            success_url: `${process.env.NEXT_PUBLIC_PAYLOAD_API}/checkout/success`,
+            cancel_url: `${process.env.NEXT_PUBLIC_PAYLOAD_API}/checkout/cancel`,
           }),
           new Promise((resolve) => setTimeout(resolve, 5000)).then(() => {
             throw new Error('Timeout')
