@@ -61,8 +61,8 @@ export default async function CategoryPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ slug: string }>
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
+  params: { slug: string }
+  searchParams?: { [key: string]: string | string[] | undefined }
 }) {
   const resolvedParams = await params
   const { slug } = resolvedParams
