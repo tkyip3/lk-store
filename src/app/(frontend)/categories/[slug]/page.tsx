@@ -61,10 +61,11 @@ export default async function CategoryPage({
   params,
   searchParams,
 }: {
-  params: { slug: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
+  params: Promise<{ slug: string }> // ← 必须是 Promise
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }> // ← 必须是 Promise
 }) {
   const resolvedParams = await params
+  const resolvedSearchParams = await searchParams
   const { slug } = resolvedParams
 
   // Step 1: 找 category
@@ -74,7 +75,7 @@ export default async function CategoryPage({
   }
 
   // Step 2: 找商品
-  const page = Math.max(1, parseInt(searchParams?.page as string) || 1)
+  const page = Math.max(1, parseInt(resolvedSearchParams?.page as string) || 1)
   const { docs: products, totalPages } = await getProductsByCategoryId(String(category.id), page)
 
   return (

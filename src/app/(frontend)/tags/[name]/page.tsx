@@ -57,14 +57,15 @@ export default async function TagPage({
   params,
   searchParams,
 }: {
-  params: { name: string }
-  searchParams?: { [key: string]: string | string[] | undefined }
+  params: Promise<{ name: string }>
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const resolvedParams = await params
+  const resolvedSearchParams = await searchParams
   const { name } = resolvedParams
 
   // Step 2: 找商品
-  const page = Math.max(1, parseInt(searchParams?.page as string) || 1)
+  const page = Math.max(1, parseInt(resolvedSearchParams?.page as string) || 1)
   const { docs: products, totalPages } = await getProductsByTag(decodeURI(name), page)
 
   return (
