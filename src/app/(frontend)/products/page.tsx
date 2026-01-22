@@ -68,11 +68,21 @@ export default async function ProductList({
 
   const { docs: products, totalPages } = productsResponse
 
+  // Transform categories and tags to match FilterControls props
+  const transformedCategories = categories.map((cat) => ({
+    id: String(cat.id),
+    name: cat.name,
+  }))
+  const transformedTags = tags.map((tag) => ({
+    id: String(tag.id),
+    name: tag.name,
+  }))
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8">商品列表</h1>
       {/* 筛选栏 */}
-      <FilterControls categories={categories} tags={tags} />
+      <FilterControls categories={transformedCategories} tags={transformedTags} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((p: Product) => (
           <ProductItem key={p.id} product={p} />
