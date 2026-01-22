@@ -5,12 +5,19 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import ProductItem from '@/components/ProductItem'
 import type { Product, Tag } from '@/payload-types'
+import ProductPagination from '@/components/ProductPagination'
+
+const PER_PAGE = 4
 
 interface ApiResponse<T> {
   docs: T[]
 }
+interface ProductsResponse {
+  docs: Product[]
+  totalPages: number // Payload 会返回 totalPages
+}
 
-async function getProductsByTag(tagName: string): Promise<{ docs: Product[] }> {
+async function getProductsByTag(tagName: string, page: number): Promise<ProductsResponse> {
   // Step 1: 用中文 tagName 查找對應的 tag ID
   const tagApiUrl = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/tags`
   const tagUrl = new URL(tagApiUrl)
@@ -25,7 +32,7 @@ async function getProductsByTag(tagName: string): Promise<{ docs: Product[] }> {
   const tagData = (await tagRes.json()) as { docs: Array<{ id: string }> }
 
   if (tagData.docs.length === 0) {
-    return { docs: [] } // 沒有對應的 tag
+    return { docs: [], totalPages: 0 } // 沒有對應的 tag
   }
 
   const tagId = tagData.docs[0].id
@@ -34,6 +41,8 @@ async function getProductsByTag(tagName: string): Promise<{ docs: Product[] }> {
   const productUrl = new URL(`${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products`)
   productUrl.searchParams.set('where[published][equals]', 'true')
   productUrl.searchParams.set('where[tags][in]', tagId)
+  productUrl.searchParams.set('limit', String(PER_PAGE))
+  productUrl.searchParams.set('page', String(page))
 
   const productRes = await fetch(productUrl.toString(), { next: { revalidate: 30 } })
   if (!productRes.ok) {
@@ -44,12 +53,19 @@ async function getProductsByTag(tagName: string): Promise<{ docs: Product[] }> {
   return productRes.json()
 }
 
-export default async function CategoryPage({ params }: { params: Promise<{ name: string }> }) {
+export default async function TagPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ name: string }>
+  searchParams?: { [key: string]: string | string[] | undefined }
+}) {
   const resolvedParams = await params
   const { name } = resolvedParams
 
   // Step 2: 找商品
-  const { docs: products } = await getProductsByTag(decodeURI(name))
+  const page = Math.max(1, parseInt(searchParams?.page as string) || 1)
+  const { docs: products, totalPages } = await getProductsByTag(decodeURI(name), page)
 
   return (
     <div className="container mx-auto px-4">
@@ -64,6 +80,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ name:
           ))}
         </div>
       )}
+
+      <ProductPagination totalPages={totalPages} type="tags" typeId={decodeURI(name)} />
     </div>
   )
 }
