@@ -8,12 +8,16 @@ interface ProductPaginationProps {
   totalPages: number
   type?: 'products' | 'categories' | 'tags'
   typeId?: string
+  category?: string
+  tag?: string
 }
 
 export default function ProductPagination({
   totalPages,
   type = 'products',
   typeId,
+  category,
+  tag,
 }: ProductPaginationProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -29,7 +33,14 @@ export default function ProductPagination({
   const goToPage = (page: number) => {
     if (page < 1 || page > totalPages) return
     if (type === 'products') {
-      router.push(`/products?page=${page}`)
+      let url = `/products?page=${page}`
+      if (category) {
+        url += `&category=${encodeURIComponent(category)}`
+      }
+      if (tag) {
+        url += `&tag=${encodeURIComponent(tag)}`
+      }
+      router.push(url)
     } else {
       router.push(`/${type}/${typeId}?page=${page}`)
     }

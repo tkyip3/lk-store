@@ -1,5 +1,6 @@
 import ProductItem from '@/components/ProductItem'
-import type { Product } from '@/payload-types'
+import type { Product, Category, Tag } from '@/payload-types'
+import FilterControls from '@/components/FilterControls'
 import ProductPagination from '@/components/ProductPagination'
 
 const PER_PAGE = 12
@@ -9,10 +10,37 @@ interface ProductsResponse {
   totalPages: number // Payload 会返回 totalPages
 }
 
-async function getProducts(page: number): Promise<ProductsResponse> {
-  const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[published][equals]=true&locale=zh-TW&limit=${PER_PAGE}&page=${page}`
+async function getCategories(): Promise<{ docs: Category[] }> {
+  const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/categories?where[published][equals]=true&locale=zh-TW&sort=order&limit=0`
+  const res = await fetch(url, { next: { revalidate: 30 } })
+  if (!res.ok) throw new Error('Failed to fetch categories')
+  return res.json()
+}
 
-  // ⚠️ 添加 cache: 'no-store' 或确保 URL 唯一（推荐后者）
+async function getTags(): Promise<{ docs: Tag[] }> {
+  const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/tags?where[published][equals]=true&locale=zh-TW&sort=order&limit=0`
+  const res = await fetch(url, { next: { revalidate: 30 } })
+  if (!res.ok) throw new Error('Failed to fetch categories')
+  return res.json()
+}
+
+async function getProducts(
+  page: number,
+  category?: string,
+  tag?: string,
+): Promise<ProductsResponse> {
+  let url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[published][equals]=true&locale=zh-TW&limit=${PER_PAGE}&page=${page}`
+
+  // 添加 category 筛选（假设 category 是关系字段，传的是 ID）
+  if (category) {
+    url += `&where[categories][in]=${encodeURIComponent(category)}`
+  }
+
+  // 添加 tag 筛选（假设 tags 是多选关系字段）
+  if (tag) {
+    url += `&where[tags][in][0]=${encodeURIComponent(tag)}`
+  }
+
   const res = await fetch(url, {
     next: { revalidate: 30 },
     // 可选：在开发时临时加 cache: 'no-store' 测试
@@ -27,11 +55,24 @@ export default async function ProductList({
   searchParams?: { [key: string]: string | string[] | undefined }
 }) {
   const page = Math.max(1, parseInt(searchParams?.page as string) || 1)
-  const { docs: products, totalPages } = await getProducts(page)
+  const category = Array.isArray(searchParams?.category)
+    ? searchParams.category[0]
+    : searchParams?.category || ''
+  const tag = Array.isArray(searchParams?.tag) ? searchParams.tag[0] : searchParams?.tag || ''
+  const [productsResponse, { docs: categories }, { docs: tags }] = await Promise.all([
+    getProducts(page, category, tag),
+    getCategories(),
+    getTags(),
+  ])
+  console.log(categories)
+
+  const { docs: products, totalPages } = productsResponse
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center mb-8">商品列表</h1>
+      {/* 筛选栏 */}
+      <FilterControls categories={categories} tags={tags} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((p: Product) => (
           <ProductItem key={p.id} product={p} />
@@ -39,7 +80,7 @@ export default async function ProductList({
       </div>
 
       {/* 分页 */}
-      <ProductPagination totalPages={totalPages} />
+      <ProductPagination totalPages={totalPages} category={category} tag={tag} />
     </div>
   )
 }
