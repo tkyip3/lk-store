@@ -36,7 +36,7 @@ export default function FilterControls({ categories, tags }: FilterControlsProps
         </label>
         <select
           id="category"
-          className="select w-full"
+          className="select appearance-none pl-3 pr-7 w-full"
           value={currentCategory}
           onChange={(e: ChangeEvent<HTMLSelectElement>) =>
             handleFilterChange('category', e.target.value)
@@ -58,7 +58,7 @@ export default function FilterControls({ categories, tags }: FilterControlsProps
         </label>
         <select
           id="tag"
-          className="select w-full"
+          className="select appearance-none pl-3 pr-7 w-full"
           value={currentTag}
           onChange={(e: ChangeEvent<HTMLSelectElement>) =>
             handleFilterChange('tag', e.target.value)
