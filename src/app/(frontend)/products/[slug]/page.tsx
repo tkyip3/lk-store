@@ -23,28 +23,34 @@ async function getProductBySlug(slug: string): Promise<Product | null> {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }> // ✅ Promise<>
+  params: Promise<{ slug: string }>
 }): Promise<Metadata> {
-  const { slug } = await params // 👈 await 解包
+  const { slug } = await params
   const product = await getProductBySlug(slug)
-  const firstImage = product.images?.[0]?.image
-  const imageUrl =
-    firstImage && typeof firstImage === 'object' && 'url' in firstImage
-      ? `${process.env.NEXT_PUBLIC_PAYLOAD_API}${(firstImage as { url: string }).url}`
+
+  const baseUrl = process.env.NEXT_PUBLIC_PAYLOAD_API
+  const firstImageUrl =
+    product?.images?.[0]?.image &&
+    typeof product.images[0].image === 'object' &&
+    'url' in product.images[0].image
+      ? `${baseUrl}${(product.images[0].image as { url: string }).url}`
       : undefined
 
+  const title = product ? `${product.name} | HK LK Store 網上商店` : '商品未找到'
+  const description = product?.description || '商品详情'
+
   return {
-    title: product ? `${product.name} | HK LK Store 網上商店` : '商品未找到',
-    description: product?.description || '商品详情',
+    title,
+    description,
     openGraph: {
-      title: product ? `${product.name} | HK LK Store 網上商店` : '商品未找到',
-      description: product?.description || '商品详情',
-      images: imageUrl ? [imageUrl] : [],
+      title,
+      description,
+      images: firstImageUrl ? [firstImageUrl] : [],
     },
     twitter: {
-      title: product ? `${product.name} | HK LK Store 網上商店` : '商品未找到',
-      description: product?.description || '商品详情',
-      images: imageUrl ? [imageUrl] : [],
+      title,
+      description,
+      images: firstImageUrl ? [firstImageUrl] : [],
     },
   }
 }
@@ -60,11 +66,22 @@ export default async function ProductDetail({
 
   if (!product) {
     return (
-      <div className="container mx-auto px-4 py-12 text-center">
-        <h1 className="text-2xl font-bold text-error">⚠️ 商品未找到</h1>
-        <Link href="/products" className="btn btn-link mt-4">
-          返回商品列表
-        </Link>
+      <div className="container mx-auto px-4 h-full">
+        <div className="flex flex-col justify-center text-center gap-4">
+          <div className="flex gap-2 justify-center">
+            <Icon icon="line-md:line-md:alert-loop" width="4em" height="4em" />
+          </div>
+          <h1 className="text-3xl font-bold ">未找到相關商品</h1>
+          <p className="">你所找的商品不存在或已經下架，歡迎遊覽其他商品。</p>
+          <p className="flex gap-2 justify-center">
+            <Link className="btn btn-primary" href={'/prouducts'}>
+              返回購物頁面
+            </Link>
+            <Link className="btn btn-primary" href={'/'}>
+              返回主頁
+            </Link>
+          </p>
+        </div>
       </div>
     )
   }

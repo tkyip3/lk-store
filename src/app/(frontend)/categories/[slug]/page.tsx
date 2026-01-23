@@ -98,7 +98,7 @@ export default async function CategoryPage({
       )}
 
       {products.length === 0 ? (
-        <p className="text-center text-gray-500">此分類下無商品</p>
+        <p className="text-center text-gray-500">未有相關商品</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {products.map((p: Product) => (
