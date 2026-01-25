@@ -134,6 +134,7 @@ export const Products: CollectionConfig = {
     {
       name: 'homepageIndex',
       type: 'number',
+      min: 0,
       defaultValue: 0,
       label: {
         'zh-TW': '首頁顥示次序',
