@@ -132,6 +132,15 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: 'homepageIndex',
+      type: 'number',
+      defaultValue: 0,
+      label: {
+        'zh-TW': '首頁顥示次序',
+        en: 'Homepage Index',
+      },
+    },
+    {
       name: 'published',
       type: 'checkbox',
       defaultValue: true,

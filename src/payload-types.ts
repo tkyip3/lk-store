@@ -190,6 +190,7 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
+  homepageIndex?: number | null;
   published?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -365,6 +366,7 @@ export interface ProductsSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  homepageIndex?: T;
   published?: T;
   updatedAt?: T;
   createdAt?: T;
