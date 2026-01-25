@@ -8,6 +8,7 @@ import ProductItem from '@/components/ProductItem'
 
 import './styles.css'
 
+export const dynamic = 'force-dynamic'
 async function getProducts(): Promise<{ docs: Product[] }> {
   const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[published][equals]=true&where[homepageIndex][greater_than]=0&locale=zh-TW&limit=10&sort=homepageIndex`
   const res = await fetch(url, { next: { revalidate: 30 } })
