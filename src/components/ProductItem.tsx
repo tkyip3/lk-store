@@ -24,7 +24,7 @@ export default function ProductItem({ product }: { product: Product }) {
                       src={img.image.url}
                       alt={p.name}
                       fill
-                      className="object-cover"
+                      className={`object-cover ${p.stock == 0 && 'grayscale'}`}
                       unoptimized
                     />
                   )
@@ -38,7 +38,7 @@ export default function ProductItem({ product }: { product: Product }) {
                   src={p.images[0].image.url}
                   alt={p.name}
                   fill
-                  className="object-cover"
+                  className={`object-cover ${p.stock == 0 && 'grayscale'}`}
                   unoptimized
                 />
               )}
@@ -60,7 +60,11 @@ export default function ProductItem({ product }: { product: Product }) {
         <div className="text-2xl font-bold">
           {p.currency.toUpperCase()} {p.price}
         </div>
-        {p.stock > 0 && <div className="badge badge-success w-max">有現貨</div>}
+        {p.stock > 0 ? (
+          <div className="badge badge-success w-max">有現貨</div>
+        ) : (
+          <div className="badge badge-error w-max">售罄</div>
+        )}
       </div>
     </div>
   )

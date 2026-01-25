@@ -20,9 +20,10 @@ type ImageItem = {
 
 interface ProductGalleryProps {
   images: ImageItem[]
+  sellout?: boolean
 }
 
-export default function ProductGallery({ images }: ProductGalleryProps) {
+export default function ProductGallery({ images, sellout }: ProductGalleryProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null)
 
   if (!images || images.length === 0) {
@@ -57,7 +58,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                 alt={item.image.alt || `商品图片 ${i + 1}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-contain"
+                className={`object-contain ${sellout && 'grayscale'}`}
                 unoptimized
               />
             </div>
@@ -84,7 +85,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                   alt={`缩略图 ${i + 1}`}
                   fill
                   sizes="100px"
-                  className="object-cover"
+                  className={`object-cover ${sellout && 'grayscale'}`}
                   unoptimized
                 />
               </div>

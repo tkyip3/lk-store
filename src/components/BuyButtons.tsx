@@ -82,7 +82,7 @@ export default function BuyButtons({
           disabled={stock === 0 || loading}
           // onClick={handleBuyNow}
         >
-          {loading ? '處理中...' : '💳 馬上購買（Stripe 快速結帳）'}
+          {loading ? '處理中...' : stock === 0 ? '已售罄' : '馬上購買'}
         </button>
       </form>
     </div>

@@ -144,7 +144,7 @@ export default async function ProductDetail({
         <div className="space-y-4">
           {product.images && product.images.length > 0 ? (
             <div className="relative w-full bg-gray-900/50 rounded-lg overflow-hidden backdrop-blur-sm">
-              <ProductGallery images={galleryImages} />
+              <ProductGallery images={galleryImages} sellout={product.stock === 0} />
             </div>
           ) : (
             <div className="aspect-square w-full bg-gray-900/50 rounded-lg flex items-center justify-center backdrop-blur-sm">
