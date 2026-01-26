@@ -80,7 +80,7 @@ export default async function ProductList({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">商品列表</h1>
+      <h1 className="text-xl font-bold text-center mb-8">商品列表</h1>
       {/* 筛选栏 */}
       <FilterControls categories={transformedCategories} tags={transformedTags} />
       {products.length === 0 ? (

@@ -48,7 +48,7 @@ export default async function ProductList() {
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-3xl font-bold text-center mb-8">全部分類</h1>
+      <h1 className="text-xl font-bold text-center mb-8">全部分類</h1>
       <div className="flex items-center justify-center">
         <TagCloudClient tags={data} />
       </div>

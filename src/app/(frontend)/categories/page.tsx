@@ -16,7 +16,7 @@ export default async function ProductList() {
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-3xl font-bold text-center mb-8">全部分類</h1>
+      <h1 className="text-xl font-bold text-center mb-8">全部分類</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {categories.map((c: Category) => (
@@ -37,7 +37,7 @@ export default async function ProductList() {
                 />
               )}
             </div>
-            <div className="relative flex flex-col items-center justify-center h-full bg-black/50 text-2xl text-shadow-lg/20 font-bold backdrop-blur-sm backdrop-saturate-130 scale-150 opacity-0 hover:scale-100 hover:opacity-100 transition-all duration-300 ease-in-out">
+            <div className="relative flex flex-col items-center justify-center h-full bg-black/50 text-lg text-shadow-lg/20 font-bold backdrop-blur-sm backdrop-saturate-130 scale-150 opacity-0 hover:scale-100 hover:opacity-100 transition-all duration-300 ease-in-out">
               {c.name}
             </div>
           </Link>

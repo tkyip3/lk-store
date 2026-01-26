@@ -13,7 +13,7 @@ export default async function ProductList() {
             height="4em"
           />
         </div>
-        <h1 className="text-3xl font-bold ">已完成交易</h1>
+        <h1 className="text-xl font-bold ">已完成交易</h1>
         <p>感謝你的購買。</p>
         <p className="flex gap-2 justify-center">
           <Link className="btn btn-primary" href={'/'}>

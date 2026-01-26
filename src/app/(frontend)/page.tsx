@@ -41,7 +41,7 @@ export default async function HomePage() {
       <div className="container mx-auto">
         <div className="home-products">
           <HomeSwiper images={categoriesImages} />
-          <div className="divider text-4xl my-8 font-bold">精選商品</div>
+          <div className="divider text-2xl my-8 font-bold">精選商品</div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {products.map((p: Product) => (
               <ProductItem key={p.id} product={p} />

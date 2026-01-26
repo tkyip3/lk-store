@@ -10,7 +10,7 @@ export default async function ProductList() {
         <div className="flex gap-2 justify-center">
           <Icon icon="line-md:cancel-twotone" width="4em" height="4em" />
         </div>
-        <h1 className="text-3xl font-bold ">交易失敗</h1>
+        <h1 className="text-xl font-bold ">交易失敗</h1>
         <p className="">如有需要，可以直接WhatsApp，與我們聯絡。</p>
         <p className="flex gap-2 justify-center">
           <Link

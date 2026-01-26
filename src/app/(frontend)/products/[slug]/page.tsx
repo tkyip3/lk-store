@@ -71,7 +71,7 @@ export default async function ProductDetail({
           <div className="flex gap-2 justify-center">
             <Icon icon="line-md:line-md:alert-loop" width="4em" height="4em" />
           </div>
-          <h1 className="text-3xl font-bold ">未找到相關商品</h1>
+          <h1 className="text-xl font-bold ">未找到相關商品</h1>
           <p className="">你所找的商品不存在或已經下架，歡迎遊覽其他商品。</p>
           <p className="flex gap-2 justify-center">
             <Link className="btn btn-primary" href={'/prouducts'}>
@@ -191,7 +191,7 @@ export default async function ProductDetail({
               })}
             </div>
           )}
-          <p className="text-3xl font-black mb-8">
+          <p className="text-xl font-black mb-8">
             {product.currency?.toUpperCase()} {displayPrice}
           </p>
 

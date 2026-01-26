@@ -91,7 +91,7 @@ export default async function CategoryPage({
               unoptimized
             />
           </div>
-          <div className="flex text-2xl items-center justify-center w-2/5 font-bold p-4 bg-gray-700 text-center">
+          <div className="flex text-lg items-center justify-center w-2/5 font-bold p-4 bg-gray-700 text-center">
             {category.name}
           </div>
         </div>

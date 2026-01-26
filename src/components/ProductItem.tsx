@@ -57,7 +57,7 @@ export default function ProductItem({ product }: { product: Product }) {
         >
           {p.name}
         </Link>
-        <div className="text-2xl font-bold">
+        <div className="text-lg font-bold">
           {p.currency.toUpperCase()} {p.price}
         </div>
         {p.stock > 0 ? (
