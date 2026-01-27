@@ -31,7 +31,10 @@
   //   "PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_test_51R6wTrL09VLdDhI429o8DhvHF4hwnm26ASFUBLZ4NlFIR6vfVmcvpa3NkMs8JC9ZUsPr9nh1FcXKO1h7T5Q8WYjD00YqssNrsa",
   // },
   "vars": {
-    "PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_live_51R6wTrL09VLdDhI4TpzT4H6Gz5zfXUbHT336D7hbmwmnj2aRwjpCBgxSx0bcjN6eWTt7cwT5iUk0ruiERpoh5AxX00kUE2Budj",
+    //yiptsz.blessive.brush
+    //"PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_live_51R6wTrL09VLdDhI4TpzT4H6Gz5zfXUbHT336D7hbmwmnj2aRwjpCBgxSx0bcjN6eWTt7cwT5iUk0ruiERpoh5AxX00kUE2Budj",
+    //hk.lk.store
+    "PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_live_51SuE3rQb6sksNOxMyhvD9zFbd90Z9jYfHJ6eInCWMC23kFSbhYLEVW0psq3tjOnmLTdYm73ymjcOBPPSMwH5Vmpo00Wqv3hwus",
   },
   "services": [
     // The service should match the "name" of your worker
@@ -66,7 +69,10 @@
         },
       ],
       "vars": {
-        "PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_live_51R6wTrL09VLdDhI4TpzT4H6Gz5zfXUbHT336D7hbmwmnj2aRwjpCBgxSx0bcjN6eWTt7cwT5iUk0ruiERpoh5AxX00kUE2Budj",
+        //yiptsz.blessive.brush
+        //"PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_live_51R6wTrL09VLdDhI4TpzT4H6Gz5zfXUbHT336D7hbmwmnj2aRwjpCBgxSx0bcjN6eWTt7cwT5iUk0ruiERpoh5AxX00kUE2Budj",
+        //hk.lk.store
+        "PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_live_51SuE3rQb6sksNOxMyhvD9zFbd90Z9jYfHJ6eInCWMC23kFSbhYLEVW0psq3tjOnmLTdYm73ymjcOBPPSMwH5Vmpo00Wqv3hwus",
       },
       "services": [
         // The service should match the "name" of your worker
