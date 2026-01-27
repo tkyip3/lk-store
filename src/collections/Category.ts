@@ -20,7 +20,6 @@ export const Category: CollectionConfig = {
         'zh-TW': '分類名稱',
         en: 'Category Name',
       },
-      localized: true,
     },
     // {
     //   name: 'virtual-button',

@@ -32,7 +32,6 @@ export const Products: CollectionConfig = {
         'zh-TW': '商品名稱',
         en: 'Product Name',
       },
-      localized: true,
     },
     // {
     //   name: 'virtual-button',
