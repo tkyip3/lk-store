@@ -1,4 +1,6 @@
 // ✅ 最小可行商品列表頁（無錯誤、可直接跑）
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 
