@@ -1,10 +1,11 @@
 // ✅ 最小可行商品列表頁（無錯誤、可直接跑）
-'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
 
 import type { Category } from '@/payload-types'
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 async function getCategories(): Promise<{ docs: Category[] }> {
   const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/categories?where[published][equals]=true&locale=zh-TW&sort=order&limit=0`
