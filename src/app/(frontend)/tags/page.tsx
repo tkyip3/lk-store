@@ -5,7 +5,7 @@ import Image from 'next/image'
 import type { Product, Tag } from '@/payload-types'
 import TagCloudClient from '@/components/TagCloudClient'
 
-// ✅ 明确禁用静态生成：构建时完全跳过此页面
+// ✅ 明確禁用靜態生成：構建時完全跳過此頁面
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
@@ -17,21 +17,21 @@ interface TagItem {
 async function getProducts(): Promise<{ docs: Product[] }> {
   const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[published][equals]=true&locale=zh-TW&limit=0`
   const res = await fetch(url, {
-    cache: 'no-store', // 不缓存，每次请求都重新获取
+    cache: 'no-store', // 不緩存，每次請求都重新獲取
   })
 
   if (!res.ok) throw new Error('Failed to fetch products')
   return res.json()
 }
 
-// 类型守卫函数
+// 類型守衞函數
 function isTag(obj: any): obj is Tag {
   return obj && typeof obj === 'object' && 'name' in obj
 }
 
-// ✅ 所有逻辑移到组件内部
+// ✅ 所有邏輯移到組件內部
 export default async function ProductList() {
-  // ✅ 在组件内 await，此时 dynamic 生效
+  // ✅ 在組件內 await，此時 dynamic 生效
   const { docs: products } = await getProducts()
   const tagsData = products.map((p) => p.tags).flat()
   const validTags = tagsData.filter(isTag)

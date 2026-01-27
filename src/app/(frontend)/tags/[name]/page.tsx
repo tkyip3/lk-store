@@ -14,7 +14,7 @@ interface ApiResponse<T> {
 }
 interface ProductsResponse {
   docs: Product[]
-  totalPages: number // Payload 会返回 totalPages
+  totalPages: number // Payload 會返回 totalPages
 }
 
 async function getProductsByTag(tagName: string, page: number): Promise<ProductsResponse> {

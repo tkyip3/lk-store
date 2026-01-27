@@ -25,7 +25,7 @@ export default function ProductPagination({
 
   const [selectedPage, setSelectedPage] = useState<string>(String(currentPage))
 
-  // 同步 URL 变化（如用户手动改地址栏）
+  // 同步 URL 變化（如用户手動改地址欄）
   useEffect(() => {
     setSelectedPage(String(currentPage))
   }, [currentPage])
@@ -57,7 +57,7 @@ export default function ProductPagination({
   return (
     <div className="flex justify-center py-4">
       <div className="join">
-        {/* 上一页 */}
+        {/* 上一頁 */}
         <button
           className="join-item btn"
           onClick={() => goToPage(currentPage - 1)}
@@ -66,7 +66,7 @@ export default function ProductPagination({
           «
         </button>
 
-        {/* 页码选择器 */}
+        {/* 頁碼選擇器 */}
         <select
           id="page-selector"
           name="page-selector"
@@ -81,7 +81,7 @@ export default function ProductPagination({
           ))}
         </select>
 
-        {/* 下一页 */}
+        {/* 下一頁 */}
         <button
           className="join-item btn"
           onClick={() => goToPage(currentPage + 1)}
