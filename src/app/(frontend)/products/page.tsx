@@ -7,7 +7,7 @@ const PER_PAGE = 12
 
 interface ProductsResponse {
   docs: Product[]
-  totalPages: number // Payload 会返回 totalPages
+  totalPages: number // Payload 會返回 totalPages
 }
 
 async function getCategories(): Promise<{ docs: Category[] }> {
@@ -31,19 +31,19 @@ async function getProducts(
 ): Promise<ProductsResponse> {
   let url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[published][equals]=true&locale=zh-TW&limit=${PER_PAGE}&page=${page}`
 
-  // 添加 category 筛选（假设 category 是关系字段，传的是 ID）
+  // 添加 category 篩選（假設 category 是關係字段，傳的是 ID）
   if (category) {
     url += `&where[categories][in]=${encodeURIComponent(category)}`
   }
 
-  // 添加 tag 筛选（假设 tags 是多选关系字段）
+  // 添加 tag 篩選（假設 tags 是多選關係字段）
   if (tag) {
     url += `&where[tags][in][0]=${encodeURIComponent(tag)}`
   }
 
   const res = await fetch(url, {
     next: { revalidate: 30 },
-    // 可选：在开发时临时加 cache: 'no-store' 测试
+    // 可選：在開發時臨時加 cache: 'no-store' 測試
   })
   if (!res.ok) throw new Error('Failed to fetch products')
   return res.json()
@@ -81,7 +81,7 @@ export default async function ProductList({
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-xl font-bold text-center mb-8">商品列表</h1>
-      {/* 筛选栏 */}
+      {/* 篩選欄 */}
       <FilterControls categories={transformedCategories} tags={transformedTags} />
       {products.length === 0 ? (
         <p className="text-center">未有相關商品</p>
@@ -93,7 +93,7 @@ export default async function ProductList({
         </div>
       )}
 
-      {/* 分页 */}
+      {/* 分頁 */}
       <ProductPagination totalPages={totalPages} category={category} tag={tag} />
     </div>
   )

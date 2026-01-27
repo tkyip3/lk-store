@@ -16,7 +16,7 @@ interface ApiResponse<T> {
 
 interface ProductsResponse {
   docs: Product[]
-  totalPages: number // Payload 会返回 totalPages
+  totalPages: number // Payload 會返回 totalPages
 }
 export async function generateMetadata({
   params,
@@ -28,7 +28,7 @@ export async function generateMetadata({
 
   return {
     title: category ? `${category.name} | HK LK Store` : '商品未找到',
-    description: category?.description || '商品详情',
+    description: category?.description || '商品詳情',
   }
 }
 async function getCategoryBySlug(slug: string): Promise<Category | null> {
@@ -61,8 +61,8 @@ export default async function CategoryPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ slug: string }> // ← 必须是 Promise
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }> // ← 必须是 Promise
+  params: Promise<{ slug: string }> // ← 必須是 Promise
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }> // ← 必須是 Promise
 }) {
   const resolvedParams = await params
   const resolvedSearchParams = await searchParams

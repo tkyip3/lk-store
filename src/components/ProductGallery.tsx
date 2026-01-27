@@ -29,14 +29,14 @@ export default function ProductGallery({ images, sellout }: ProductGalleryProps)
   if (!images || images.length === 0) {
     return (
       <div className="bg-base-200 aspect-square rounded-lg flex items-center justify-center">
-        <span className="text-gray-500">暂无图片</span>
+        <span className="text-gray-500">暫無圖片</span>
       </div>
     )
   }
 
   return (
     <div className="relative">
-      {/* 主图 Swiper */}
+      {/* 主圖 Swiper */}
       <Swiper
         style={
           {
@@ -55,7 +55,7 @@ export default function ProductGallery({ images, sellout }: ProductGalleryProps)
             <div className="relative aspect-square w-full">
               <Image
                 src={item.image.url}
-                alt={item.image.alt || `商品图片 ${i + 1}`}
+                alt={item.image.alt || `商品圖片 ${i + 1}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className={`object-contain ${sellout && 'grayscale'}`}
@@ -66,7 +66,7 @@ export default function ProductGallery({ images, sellout }: ProductGalleryProps)
         ))}
       </Swiper>
 
-      {/* 缩略图 Swiper（仅当图片 > 1 时显示） */}
+      {/* 縮略圖 Swiper（僅當圖片 > 1 時顯示） */}
       {images.length > 1 && (
         <Swiper
           onSwiper={setThumbsSwiper}
@@ -82,7 +82,7 @@ export default function ProductGallery({ images, sellout }: ProductGalleryProps)
               <div className="relative w-full h-full rounded border border-base-300 overflow-hidden">
                 <Image
                   src={item.image.url}
-                  alt={`缩略图 ${i + 1}`}
+                  alt={`縮略圖 ${i + 1}`}
                   fill
                   sizes="100px"
                   className={`object-cover ${sellout && 'grayscale'}`}

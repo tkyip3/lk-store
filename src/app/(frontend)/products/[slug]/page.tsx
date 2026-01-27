@@ -19,7 +19,7 @@ async function getProductBySlug(slug: string): Promise<Product | null> {
   return docs[0] || null
 }
 
-// ✅ 修正 1：generateMetadata 的 params 也要 await + 类型修正
+// ✅ 修正 1：generateMetadata 的 params 也要 await + 類型修正
 export async function generateMetadata({
   params,
 }: {
@@ -37,7 +37,7 @@ export async function generateMetadata({
       : undefined
 
   const title = product ? `${product.name} | HK LK Store 網上商店` : '商品未找到'
-  const description = product?.description || '商品详情'
+  const description = product?.description || '商品詳情'
 
   return {
     title,
@@ -55,13 +55,13 @@ export async function generateMetadata({
   }
 }
 
-// ✅ 修正 2：主组件 params 类型修正（逻辑你已对，只差类型）
+// ✅ 修正 2：主組件 params 類型修正（邏輯你已對，只差類型）
 export default async function ProductDetail({
   params,
 }: {
-  params: Promise<{ slug: string }> // ✅ 补全类型
+  params: Promise<{ slug: string }> // ✅ 補全類型
 }) {
-  const { slug } = await params // ✅ 正确解包
+  const { slug } = await params // ✅ 正確解包
   const product = await getProductBySlug(slug)
 
   if (!product) {
@@ -158,7 +158,7 @@ export default async function ProductDetail({
                 <div key={i} className="relative w-16 h-16 flex-shrink-0 rounded border">
                   <Image
                     src={img.image.url}
-                    alt={`${product.name} 图片 ${i + 2}`}
+                    alt={`${product.name} 圖片 ${i + 2}`}
                     fill
                     className="object-cover"
                   />

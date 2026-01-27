@@ -15,7 +15,7 @@ export const Products: CollectionConfig = {
     afterChange: [],
     beforeValidate: [
       ({ data, operation }) => {
-        // 仅在创建（create）时自动生成 UUID，避免更新时覆盖
+        // 僅在創建（create）時自動生成 UUID，避免更新時覆蓋
         if (operation === 'create' && (!data || !data.slug)) {
           return { ...data, slug: crypto.randomUUID() }
         }
@@ -45,7 +45,7 @@ export const Products: CollectionConfig = {
       required: true,
       unique: true,
       admin: {
-        readOnly: true, // 可选：前台设为只读，避免误改
+        readOnly: true, // 可選：前台設為只讀，避免誤改
       },
       label: {
         'zh-TW': '網址代碼',

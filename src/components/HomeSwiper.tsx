@@ -31,14 +31,14 @@ export default function HomeSwiper({ images }: HomeSwiperProps) {
   if (!images || images.length === 0) {
     return (
       <div className="bg-base-200 aspect-square rounded-lg flex items-center justify-center">
-        <span className="text-gray-500">暂无图片</span>
+        <span className="text-gray-500">暫無圖片</span>
       </div>
     )
   }
 
   return (
     <div className="relative">
-      {/* 主图 Swiper */}
+      {/* 主圖 Swiper */}
       <Swiper
         style={
           {
@@ -57,7 +57,7 @@ export default function HomeSwiper({ images }: HomeSwiperProps) {
               <Link href={`/categories/${item.slug}`}>
                 <Image
                   src={item.image.url}
-                  alt={item.image.alt || `商品图片 ${i + 1}`}
+                  alt={item.image.alt || `商品圖片 ${i + 1}`}
                   fill
                   className="object-cover"
                   unoptimized
