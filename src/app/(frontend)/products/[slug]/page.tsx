@@ -203,6 +203,23 @@ export default async function ProductDetail({
               <pre>{product.description}</pre>
             </div>
           )}
+
+          {product.subitems && (
+            <div className="prose max-w-none mb-6">
+              <div className="divider divider-start font-bold text-xl divider-primary">子項目</div>
+              <div className="join w-full">
+                {product.subitems.map((item, i) => (
+                  <input
+                    key={i}
+                    className="join-item btn flex-1"
+                    type="radio"
+                    name="options"
+                    aria-label={item.name}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
           <div className="mt-6">
             <BuyButtons
               productName={String(product.name)}

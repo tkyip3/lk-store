@@ -131,6 +131,20 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: 'subitems',
+      type: 'array',
+      fields: [
+        {
+          name: 'name',
+          type: 'text',
+        },
+      ],
+      label: {
+        'zh-TW': '子項目',
+        en: 'Subitems',
+      },
+    },
+    {
       name: 'homepageIndex',
       type: 'number',
       min: 0,
