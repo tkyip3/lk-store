@@ -32,10 +32,12 @@
   // },
   "vars": {
     //yiptsz.blessive.brush test
-    "PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_test_51R6wTrL09VLdDhI429o8DhvHF4hwnm26ASFUBLZ4NlFIR6vfVmcvpa3NkMs8JC9ZUsPr9nh1FcXKO1h7T5Q8WYjD00YqssNrsa",
+    //"PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_test_51R6wTrL09VLdDhI429o8DhvHF4hwnm26ASFUBLZ4NlFIR6vfVmcvpa3NkMs8JC9ZUsPr9nh1FcXKO1h7T5Q8WYjD00YqssNrsa",
     //yiptsz.blessive.brush live
     //"PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_live_51R6wTrL09VLdDhI4TpzT4H6Gz5zfXUbHT336D7hbmwmnj2aRwjpCBgxSx0bcjN6eWTt7cwT5iUk0ruiERpoh5AxX00kUE2Budj",
-    //hk.lk.store
+    //hk.lk.store test
+    "PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_test_51SuE4EHJBWx4t57MQRBw0pd3kii1QhI8J84K8dathSQ7arULsmw5ufmRGT8Hs12xjH29Q8mMxuMLU9RXRqr6Xvis00tAzAJeyb",
+    //hk.lk.store live
     //"PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_live_51SuE3rQb6sksNOxMyhvD9zFbd90Z9jYfHJ6eInCWMC23kFSbhYLEVW0psq3tjOnmLTdYm73ymjcOBPPSMwH5Vmpo00Wqv3hwus",
   },
   "services": [
@@ -72,10 +74,12 @@
       ],
       "vars": {
         //yiptsz.blessive.brush test
-        "PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_test_51R6wTrL09VLdDhI429o8DhvHF4hwnm26ASFUBLZ4NlFIR6vfVmcvpa3NkMs8JC9ZUsPr9nh1FcXKO1h7T5Q8WYjD00YqssNrsa",
+        //"PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_test_51R6wTrL09VLdDhI429o8DhvHF4hwnm26ASFUBLZ4NlFIR6vfVmcvpa3NkMs8JC9ZUsPr9nh1FcXKO1h7T5Q8WYjD00YqssNrsa",
         //yiptsz.blessive.brush live
         //"PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_live_51R6wTrL09VLdDhI4TpzT4H6Gz5zfXUbHT336D7hbmwmnj2aRwjpCBgxSx0bcjN6eWTt7cwT5iUk0ruiERpoh5AxX00kUE2Budj",
-        //hk.lk.store
+        //hk.lk.store test
+        "PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_test_51SuE4EHJBWx4t57MQRBw0pd3kii1QhI8J84K8dathSQ7arULsmw5ufmRGT8Hs12xjH29Q8mMxuMLU9RXRqr6Xvis00tAzAJeyb",
+        //hk.lk.store live
         //"PUBLIC_STRIPE_PUBLISHABLE_KEY": "pk_live_51SuE3rQb6sksNOxMyhvD9zFbd90Z9jYfHJ6eInCWMC23kFSbhYLEVW0psq3tjOnmLTdYm73ymjcOBPPSMwH5Vmpo00Wqv3hwus",
       },
       "services": [

@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Icon } from '@iconify/react'
-export default async function ProductList() {
+export default async function Success() {
   return (
     <div className="container mx-auto px-4 h-full">
       <div className="flex flex-col justify-center text-center gap-4">
