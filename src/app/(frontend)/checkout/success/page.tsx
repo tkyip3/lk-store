@@ -7,6 +7,7 @@ import config from '@/payload.config'
 
 // 更新庫存的函數
 async function updateStock(sessionId: string) {
+  'use server'
   try {
     const stripe = new Stripe(process.env.PRIVATE_STRIPE_API_KEY, {
       httpClient: Stripe.createFetchHttpClient(),
@@ -63,11 +64,15 @@ async function updateStock(sessionId: string) {
   }
 }
 
-export default async function Success({ searchParams }: { searchParams: { session_id?: string } }) {
+export default async function Success({
+  searchParams,
+}: {
+  searchParams: Promise<{ session_id?: string }>
+}) {
   // 如果有 session_id，更新庫存
   let stockUpdateResult = null
-  if (searchParams.session_id) {
-    stockUpdateResult = await updateStock(searchParams.session_id)
+  if ((await searchParams).session_id) {
+    stockUpdateResult = await updateStock((await searchParams).session_id)
   }
 
   return (
