@@ -32,12 +32,14 @@ const setCartToStorage = (cartItems: any[]) => {
 export default function BuyButtons({
   productName,
   productId,
+  slug,
   stock,
   price,
   images,
 }: {
   productName: string
   productId: string
+  slug: string
   stock: number
   price: number
   images: string[]
@@ -74,9 +76,10 @@ export default function BuyButtons({
     const cartItem = {
       productId,
       productName,
+      slug,
       quantity: Math.min(quantity, stock),
       price,
-      image: images[0] || '/placeholder.jpg',
+      image: images[0] || '',
       addedAt: Date.now(),
     }
 
@@ -114,6 +117,7 @@ export default function BuyButtons({
       <form action="/apis/checkout" method="post">
         <input type="hidden" name="productName" value={productName} />
         <input type="hidden" name="productId" value={productId} />
+        <input type="hidden" name="slug" value={slug} />
         <input type="hidden" name="quantity" value={quantity} />
         <input type="hidden" name="price" value={price} />
         <input type="hidden" name="images" value={JSON.stringify(images)} />

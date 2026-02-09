@@ -204,7 +204,7 @@ export default async function ProductDetail({
             </div>
           )}
 
-          {product.subitems && (
+          {product.subitems.length > 0 && (
             <div className="prose max-w-none mb-6">
               <div className="divider divider-start font-bold text-xl divider-primary">子項目</div>
               <div className="join w-full">
@@ -227,6 +227,7 @@ export default async function ProductDetail({
               stock={product.stock ?? 0}
               price={parseFloat(displayPrice)}
               images={buyImages}
+              slug={slug}
             />
           </div>
         </div>
