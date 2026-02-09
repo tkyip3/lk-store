@@ -78,6 +78,7 @@ export default function BuyButtons({
       productName,
       slug,
       quantity: Math.min(quantity, stock),
+      stock,
       price,
       image: images[0] || '',
       addedAt: Date.now(),
@@ -123,7 +124,7 @@ export default function BuyButtons({
         <input type="hidden" name="images" value={JSON.stringify(images)} />
         {stock > 1 && (
           <label className="form-control w-full">
-            <div className="label">
+            <div className="label mb-2">
               <span className="label-text font-medium">購買數量</span>
             </div>
             <input
@@ -135,7 +136,7 @@ export default function BuyButtons({
                 const val = parseInt(e.target.value, 10)
                 setQuantity(isNaN(val) ? 1 : Math.min(stock, Math.max(1, val)))
               }}
-              className="input input-bordered w-full"
+              className="input input-bordered w-full mb-4"
               aria-label="商品數量"
             />
           </label>
@@ -157,7 +158,7 @@ export default function BuyButtons({
         onClick={handleAddToCart}
         aria-label={`加入購物車：${productName}`}
       >
-        {stock === 0 ? '⚠️ 已售罄' : '🛒 加入購物車'}
+        {stock === 0 ? '已售罄' : '加入購物車'}
       </button>
     </div>
   )

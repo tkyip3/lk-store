@@ -10,6 +10,7 @@ interface CartItem {
   productId: string
   productName: string
   slug: string
+  stock: number
   quantity: number
   price: number
   image: string
@@ -39,8 +40,7 @@ const setCartToStorage = (cartItems: CartItem[]) => {
   }
 }
 
-// ===== 購物車項目組件 =====
-function CartItemRow({
+function CartItem({
   item,
   onUpdate,
   onDelete,
@@ -67,87 +67,66 @@ function CartItemRow({
   const subtotal = item.price * item.quantity
 
   return (
-    <tr className="border-b hover:bg-base-200 transition-colors">
-      {/* 圖片 */}
-      <td className="p-4 w-24">
-        <div className="w-16 h-16 rounded-lg overflow-hidden bg-base-300 flex items-center justify-center">
-          {item.image != '' ? (
-            <img src={item.image} alt={item.productName} className="w-full h-full object-cover" />
-          ) : (
-            <Icon icon="line-md:image-twotone" width="3em" height="3em" />
-          )}
-        </div>
-      </td>
-
-      {/* 商品名稱 */}
-      <td className="p-4 font-medium">
-        <Link href={`/products/${item.slug}`} className="link link-hover hover:text-primary">
-          {item.productName}
-        </Link>
-      </td>
-
-      {/* 價格 */}
-      <td className="p-4 whitespace-nowrap">${item.price.toLocaleString()}</td>
-
-      {/* 數量 */}
-      <td className="p-4 w-32">
-        <div className="join">
-          <button
-            className="btn btn-sm join-item btn-outline"
-            onClick={() => handleQuantityChange(Math.max(1, quantity - 1))}
-            disabled={isUpdating}
+    <div className="md:flex md:items-center hover:bg-gray-500/20 gap-4 px-4 py-2 border-b last:border-0 border-gray-500/50">
+      <div className="flex items-center flex-1 gap-4 mb-2 md:mb-0">
+        <div className="">
+          <Link
+            href={`/products/${item.slug}`}
+            className="w-16 h-16 mask mask-squircle overflow-hidden bg-base-300 flex items-center justify-center "
           >
-            -
-          </button>
+            {item.image != '' ? (
+              <img src={item.image} alt={item.productName} className="w-full h-full object-cover" />
+            ) : (
+              <Icon icon="line-md:image-twotone" width="3em" height="3em" />
+            )}
+          </Link>
+        </div>
+        <div className="flex-1">
+          <div className="md:text-xl font-medium">
+            <Link
+              href={`/products/${item.slug}`}
+              className=" hover:text-yellow-300 transition-all duration-300 ease-in-out"
+            >
+              {item.productName}
+            </Link>
+          </div>
+          <div className="hidden md:inline-block">
+            <small>HKD</small> {item.price.toLocaleString()}
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center gap-4">
+        <div>
           <input
             type="number"
             min="1"
+            max={item.stock}
             value={quantity}
+            id={`quantity-${item.productId}`}
+            name={`quantity-${item.productId}`}
             onChange={(e) => {
               const val = parseInt(e.target.value, 10)
               if (!isNaN(val) && val >= 1) {
                 handleQuantityChange(val)
               }
             }}
-            className="input input-sm join-item input-bordered w-16 text-center"
+            className="input w-16 text-center"
           />
+        </div>
+        <div className="w-24 text-lg flex-1">
+          <small>HKD</small> {subtotal.toLocaleString()}
+        </div>
+        <div className="">
           <button
-            className="btn btn-sm join-item btn-outline"
-            onClick={() => handleQuantityChange(quantity + 1)}
-            disabled={isUpdating}
+            className="btn btn-error btn-soft btn-square"
+            onClick={() => onDelete(item.productId)}
+            title="移除商品"
           >
-            +
+            <Icon icon="line-md:close" width="24" height="24" />
           </button>
         </div>
-      </td>
-
-      {/* 小計 */}
-      <td className="p-4 font-semibold whitespace-nowrap">${subtotal.toLocaleString()}</td>
-
-      {/* 刪除 */}
-      <td className="p-4 w-12">
-        <button
-          className="btn btn-sm btn-ghost text-error hover:bg-error/10"
-          onClick={() => onDelete(item.productId)}
-          title="移除商品"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </td>
-    </tr>
+      </div>
+    </div>
   )
 }
 
@@ -284,35 +263,27 @@ export default function CartPageClient() {
   return (
     <div className="space-y-6">
       {/* 購物車表格 */}
-      <div className="overflow-x-auto bg-base-100 rounded-2xl border">
-        <table className="table table-zebra w-full">
-          <thead>
-            <tr className="bg-base-200">
-              <th className="w-24"></th>
-              <th>商品</th>
-              <th className="whitespace-nowrap">單價</th>
-              <th className="w-32">數量</th>
-              <th className="whitespace-nowrap">小計</th>
-              <th className="w-12"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {cartItems.map((item) => (
-              <CartItemRow
-                key={item.productId}
-                item={item}
-                onUpdate={updateQuantity}
-                onDelete={deleteItem}
-              />
-            ))}
-          </tbody>
-        </table>
+      <div className="rounded-box shadow-md overflow-hidden border border-primary/50">
+        <div className="hidden md:flex justify-between items-center gap-4 px-4 py-2 text-lg font-bold bg-primary/50 ">
+          <div className="flex-1">商品</div>
+          <div className="w-16 text-center">數量</div>
+          <div className="w-24 text-center">小計</div>
+          <div className="w-10 text-center">&nbsp;</div>
+        </div>
+        {cartItems.map((item) => (
+          <CartItem
+            key={item.productId}
+            item={item}
+            onUpdate={updateQuantity}
+            onDelete={deleteItem}
+          />
+        ))}
       </div>
 
       {/* 總計和操作按鈕 */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         {/* 左側：總計 */}
-        <div className="card bg-base-200 flex-1">
+        <div className="card bg-base-200/50 flex-1">
           <div className="card-body">
             <h3 className="card-title text-lg font-bold">購物車摘要</h3>
             <div className="space-y-2 text-sm">
@@ -342,11 +313,11 @@ export default function CartPageClient() {
             disabled={itemCount === 0}
             cartItems={cartItems}
           />
-          <button className="btn btn-outline btn-error w-full" onClick={clearCart}>
-            🗑️ 清空購物車
+          <button className="btn btn-error w-full" onClick={clearCart}>
+            清空購物車
           </button>
-          <Link href="/" className="btn btn-outline w-full">
-            ← 繼續購物
+          <Link href="/product" className="btn btn-primary w-full">
+            繼續購物
           </Link>
         </div>
       </div>
