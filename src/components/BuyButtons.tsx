@@ -3,6 +3,32 @@
 
 import { useState } from 'react'
 
+// ===== LocalStorage 操作工具函數 =====
+const CART_KEY = 'cart'
+
+const getCartFromStorage = (): any[] => {
+  try {
+    if (typeof window === 'undefined') return []
+    const data = localStorage.getItem(CART_KEY)
+    return data ? JSON.parse(data) : []
+  } catch (err) {
+    console.error('讀取購物車失敗:', err)
+    return []
+  }
+}
+
+const setCartToStorage = (cartItems: any[]) => {
+  try {
+    if (typeof window === 'undefined') return
+    localStorage.setItem(CART_KEY, JSON.stringify(cartItems))
+  } catch (err) {
+    console.error('儲存購物車失敗:', err)
+    // LocalStorage 可能已滿或被禁用
+    alert('加入購物車失敗，請檢查瀏覽器設定或清理儲存空間')
+  }
+}
+
+// ===== 主組件 =====
 export default function BuyButtons({
   productName,
   productId,
@@ -19,60 +45,94 @@ export default function BuyButtons({
   const [loading, setLoading] = useState(false)
   const [quantity, setQuantity] = useState(1)
 
-  const handleAddToCart = () => {
-    // TODO: 實作加入購物車（可呼叫 /api/cart）
-    console.log('加入購物車', productId)
+  // ===== 購物車數量統計（用於成功提示）=====
+  const getCartItemQuantity = (id: string): number => {
+    const cart = getCartFromStorage()
+    const item = cart.find((item: any) => item.productId === id)
+    return item ? item.quantity : 0
   }
 
-  const handleBuyNow = async () => {
-    if (loading) return
-    setLoading(true)
-    try {
-      const res = await fetch('/apis/checkout', {
-        method: 'POST',
-        // headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, quantity, price }),
-      })
-      if (!res.ok) throw new Error('建立訂單失敗')
-      const url = await res.text()
-      // if (res.ok && data.url) {
-      window.location.href = url
-      // } else {
-      //   alert(data.error || '建立訂單失敗')
-      // }
-    } catch (err) {
-      console.error(err)
-      alert('網路錯誤，請稍後再試')
-    } finally {
-      setLoading(false)
+  // ===== 清理過期或無效的購物車項目 =====
+  const cleanupCart = () => {
+    const cart = getCartFromStorage()
+    const cleaned = cart.filter((item: any) => item.productId && item.price >= 0)
+    if (cleaned.length !== cart.length) {
+      setCartToStorage(cleaned)
     }
+    return cleaned
+  }
+
+  // ===== 加入購物車邏輯 =====
+  const handleAddToCart = () => {
+    if (stock <= 0) return
+
+    // 清理並取得當前購物車
+    const currentCart = cleanupCart()
+
+    // 檢查是否已存在此商品
+    const existingIndex = currentCart.findIndex((item: any) => item.productId === productId)
+    const cartItem = {
+      productId,
+      productName,
+      quantity: Math.min(quantity, stock),
+      price,
+      image: images[0] || '/placeholder.jpg',
+      addedAt: Date.now(),
+    }
+
+    let newCart: any[]
+    if (existingIndex !== -1) {
+      // 累加數量（仍受庫存限制）
+      const existingQty = currentCart[existingIndex].quantity
+      const newQty = Math.min(existingQty + quantity, stock)
+
+      if (newQty === existingQty) {
+        alert(`🛒 購物車中已有 ${existingQty} 件「${productName}」，已達庫存上限！`)
+        return
+      }
+
+      newCart = [...currentCart]
+      newCart[existingIndex] = { ...newCart[existingIndex], quantity: newQty }
+
+      // 累加成功提示
+      alert(`✅「${productName}」數量已更新為 ${newQty} 件！`)
+    } else {
+      newCart = [...currentCart, cartItem]
+
+      // 首次加入提示
+      alert(`✅「${productName}」x${quantity} 已加入購物車！`)
+    }
+
+    // 儲存並重置數量
+    setCartToStorage(newCart)
+    setQuantity(1)
   }
 
   return (
     <div className="mt-6 flex flex-col gap-3">
-      {/* <button className="btn btn-primary w-full" disabled={stock === 0} onClick={handleAddToCart}>
-        {stock === 0 ? '已售罄' : '加入購物車'}
-      </button> */}
-
+      {/* ===== 馬上購買表單 ===== */}
       <form action="/apis/checkout" method="post">
         <input type="hidden" name="productName" value={productName} />
         <input type="hidden" name="productId" value={productId} />
         <input type="hidden" name="quantity" value={quantity} />
         <input type="hidden" name="price" value={price} />
         <input type="hidden" name="images" value={JSON.stringify(images)} />
-
         {stock > 1 && (
-          <label htmlFor="" className="input w-full mb-2">
-            <span className="label">購買數量</span>
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text font-medium">購買數量</span>
+            </div>
             <input
-              className=""
               type="number"
+              min="1"
+              max={stock}
               value={quantity}
               onChange={(e) => {
                 const val = parseInt(e.target.value, 10)
-                const q = isNaN(val) ? 1 : val
-                setQuantity(Math.min(stock, Math.max(1, q)))
+                setQuantity(isNaN(val) ? 1 : Math.min(stock, Math.max(1, val)))
               }}
+              className="input input-bordered w-full"
+              aria-label="商品數量"
             />
           </label>
         )}
@@ -85,6 +145,16 @@ export default function BuyButtons({
           {loading ? '處理中...' : stock === 0 ? '已售罄' : '馬上購買'}
         </button>
       </form>
+
+      {/* ===== 恢復並優化的加入購物車按鈕 ===== */}
+      <button
+        className="btn btn-primary w-full"
+        disabled={stock === 0}
+        onClick={handleAddToCart}
+        aria-label={`加入購物車：${productName}`}
+      >
+        {stock === 0 ? '⚠️ 已售罄' : '🛒 加入購物車'}
+      </button>
     </div>
   )
 }
