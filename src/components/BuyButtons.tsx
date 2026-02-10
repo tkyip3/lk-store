@@ -2,6 +2,7 @@
 'use client'
 
 import { useState } from 'react'
+import { ProductOptions } from './ProductOptions'
 
 // ===== LocalStorage 操作工具函數 =====
 const CART_KEY = 'cart'
@@ -29,9 +30,15 @@ const setCartToStorage = (cartItems: any[]) => {
 }
 
 // ===== 主組件 =====
+
+interface Subitem {
+  id: string
+  name: string
+}
 export default function BuyButtons({
   productName,
   productId,
+  productSubItems,
   slug,
   stock,
   price,
@@ -39,6 +46,7 @@ export default function BuyButtons({
 }: {
   productName: string
   productId: string
+  productSubItems?: Subitem[]
   slug: string
   stock: number
   price: number
@@ -46,6 +54,9 @@ export default function BuyButtons({
 }) {
   const [loading, setLoading] = useState(false)
   const [quantity, setQuantity] = useState(1)
+  const [description, setDescription] = useState('')
+
+  const [selectedId, setSelectedId] = useState<string | null>(productSubItems?.[0]?.id || null)
 
   // ===== 購物車數量統計（用於成功提示）=====
   const getCartItemQuantity = (id: string): number => {
@@ -73,15 +84,17 @@ export default function BuyButtons({
 
     // 檢查是否已存在此商品
     const existingIndex = currentCart.findIndex((item: any) => item.productId === productId)
+    const pName = `${productName} ${productSubItems.find((item) => item.id === selectedId)?.name ? ` - ${productSubItems.find((item) => item.id === selectedId)?.name}` : ''}`
     const cartItem = {
       productId,
-      productName,
+      productName: pName,
       slug,
       quantity: Math.min(quantity, stock),
       stock,
       price,
       image: images[0] || '',
       addedAt: Date.now(),
+      description,
     }
 
     let newCart: any[]
@@ -99,12 +112,12 @@ export default function BuyButtons({
       newCart[existingIndex] = { ...newCart[existingIndex], quantity: newQty, stock: stock }
 
       // 累加成功提示
-      alert(`✅「${productName}」數量已更新為 ${newQty} 件！`)
+      alert(`✅「${pName}」數量已更新為 ${newQty} 件！`)
     } else {
       newCart = [...currentCart, cartItem]
 
       // 首次加入提示
-      alert(`✅「${productName}」x${quantity} 已加入購物車！`)
+      alert(`✅「${pName}」x${quantity} 已加入購物車！`)
     }
 
     // 儲存並重置數量
@@ -116,12 +129,51 @@ export default function BuyButtons({
     <div className="mt-6 flex flex-col gap-3">
       {/* ===== 馬上購買表單 ===== */}
       <form action="/apis/checkout" method="post">
-        <input type="hidden" name="productName" value={productName} />
+        <input
+          type="hidden"
+          name="productName"
+          value={`${productName} ${productSubItems.find((item) => item.id === selectedId)?.name ? ` - ${productSubItems.find((item) => item.id === selectedId)?.name}` : ''}`}
+        />
         <input type="hidden" name="productId" value={productId} />
         <input type="hidden" name="slug" value={slug} />
         <input type="hidden" name="quantity" value={quantity} />
         <input type="hidden" name="price" value={price} />
         <input type="hidden" name="images" value={JSON.stringify(images)} />
+        <input
+          type="hidden"
+          name="selectedItem"
+          value={productSubItems.find((item) => item.id === selectedId)?.name}
+        />
+
+        {productSubItems && productSubItems.length > 0 && (
+          <div className="prose max-w-none mb-6">
+            <div className="divider divider-start font-bold text-xl divider-primary">
+              請選擇款式
+            </div>
+
+            {/* {selectedId && (
+              <div className="mb-2 text-primary font-medium">
+                已選擇：{productSubItems.find((item) => item.id === selectedId)?.name}
+              </div>
+            )} */}
+
+            <div className="join w-full">
+              {productSubItems.map((item) => (
+                <input
+                  key={item.id}
+                  className={`join-item btn flex-1 ${selectedId === item.id ? 'btn-active' : ''}`}
+                  type="radio"
+                  name="subitem-options"
+                  value={item.id}
+                  checked={selectedId === item.id}
+                  onChange={(e) => setSelectedId(e.target.value)}
+                  aria-label={item.name}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
         {stock > 1 && (
           <label className="form-control w-full">
             <div className="label mb-2">
@@ -141,6 +193,20 @@ export default function BuyButtons({
             />
           </label>
         )}
+
+        <label className="form-control w-full">
+          <div className="label mb-2">
+            <span className="label-text font-medium">
+              備註 <small>(選填)</small>
+            </span>
+          </div>
+          <textarea
+            className="textarea w-full resize-none mb-4"
+            name="description"
+            id="description"
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
+        </label>
 
         <button
           className="btn btn-accent w-full"

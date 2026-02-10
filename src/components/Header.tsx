@@ -31,6 +31,9 @@ export default function Header() {
                 <a href="/cart" className="menu-item">
                   購物車
                 </a>
+                <a href="/admin" className="menu-item" target="_blank">
+                  管理員登入
+                </a>
                 <button onClick={() => setMenuActive(false)} className="header-close">
                   <Icon icon="line-md:close" width="1.6em" height="1.6em" />
                 </button>

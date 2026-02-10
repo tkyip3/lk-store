@@ -17,6 +17,7 @@ export const POST = (req: Request) => {
           quantity: number
           price: number
           images?: string[]
+          description?: string
         }> = []
 
         if (itemsParam) {
@@ -34,6 +35,7 @@ export const POST = (req: Request) => {
           const quantity = Number(data.get('quantity')) || 0
           const price = Number(data.get('price')) || 999
           const images = String(data.get('images')) || '[]'
+          const description = String(data.get('description')) || undefined
 
           items = [
             {
@@ -42,6 +44,7 @@ export const POST = (req: Request) => {
               quantity,
               price,
               images: JSON.parse(images),
+              description,
             },
           ]
         }
@@ -57,6 +60,7 @@ export const POST = (req: Request) => {
             product_data: {
               name: item.productName,
               images: item.images || [],
+              description: item.description || undefined,
             },
             unit_amount: Math.floor(item.price * 100),
           },

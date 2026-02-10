@@ -10,6 +10,10 @@ import type { Metadata } from 'next'
 import type { Product } from '@/payload-types'
 import { Icon } from '@iconify/react'
 
+interface Subitem {
+  id: string
+  name: string
+}
 async function getProductBySlug(slug: string): Promise<Product | null> {
   const url = `${process.env.NEXT_PUBLIC_PAYLOAD_API}/api/products?where[slug][equals]=${encodeURIComponent(slug)}&locale=zh-TW`
   const res = await fetch(url, { next: { revalidate: 60 } })
@@ -204,26 +208,17 @@ export default async function ProductDetail({
             </div>
           )}
 
-          {product.subitems.length > 0 && (
-            <div className="prose max-w-none mb-6">
-              <div className="divider divider-start font-bold text-xl divider-primary">子項目</div>
-              <div className="join w-full">
-                {product.subitems.map((item, i) => (
-                  <input
-                    key={i}
-                    className="join-item btn flex-1"
-                    type="radio"
-                    name="options"
-                    aria-label={item.name}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
           <div className="mt-6">
             <BuyButtons
               productName={String(product.name)}
               productId={String(product.id)}
+              productSubItems={
+                (product.subitems?.map((item) => ({
+                  id: item.id!,
+                  name: item.name || '', // 确保name存在，即使为空字符串
+                  // 如果还有其他必需字段，也需要在这里添加
+                })) as Subitem[]) || []
+              }
               stock={product.stock ?? 0}
               price={parseFloat(displayPrice)}
               images={buyImages}

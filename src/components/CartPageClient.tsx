@@ -15,6 +15,7 @@ interface CartItem {
   price: number
   image: string
   addedAt: number
+  description?: string
 }
 
 const CART_KEY = 'cart'
@@ -158,6 +159,7 @@ function CheckoutForm({
       return {
         productId: item.productId,
         productName: item.productName,
+        description: item.description || undefined,
         quantity: item.quantity,
         price: item.price,
         images: images,
