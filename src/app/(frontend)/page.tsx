@@ -47,6 +47,9 @@ export default async function HomePage() {
               <ProductItem key={p.id} product={p} />
             ))}
           </div>
+          <a href="/products" className="btn btn-primary btn-lg w-full mt-6">
+            查看更多商品
+          </a>
         </div>
       </div>
     </div>

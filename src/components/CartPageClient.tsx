@@ -263,7 +263,7 @@ export default function CartPageClient() {
   return (
     <div className="space-y-6">
       {/* 購物車表格 */}
-      <div className="rounded-box shadow-md overflow-hidden border border-primary/50">
+      <div className="rounded-box shadow-md overflow-hidden border border-primary/50 backdrop-blur-xs">
         <div className="hidden md:flex justify-between items-center gap-4 px-4 py-2 text-lg font-bold bg-primary/50 ">
           <div className="flex-1">商品</div>
           <div className="w-16 text-center">數量</div>
@@ -283,7 +283,7 @@ export default function CartPageClient() {
       {/* 總計和操作按鈕 */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         {/* 左側：總計 */}
-        <div className="card bg-base-200/50 flex-1">
+        <div className="card shadow-md bg-base-200/50 flex-1 backdrop-blur-xs">
           <div className="card-body">
             <h3 className="card-title text-lg font-bold">購物車摘要</h3>
             <div className="space-y-2 text-sm">
@@ -298,7 +298,9 @@ export default function CartPageClient() {
               <div className="divider my-1"></div>
               <div className="flex justify-between text-lg">
                 <span className="font-bold">總計</span>
-                <span className="font-bold text-primary">${total.toLocaleString()}</span>
+                <span className="font-bold text-primary text-2xl">
+                  HKD {total.toLocaleString()}
+                </span>
               </div>
             </div>
           </div>
