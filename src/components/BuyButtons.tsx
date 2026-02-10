@@ -96,7 +96,7 @@ export default function BuyButtons({
       }
 
       newCart = [...currentCart]
-      newCart[existingIndex] = { ...newCart[existingIndex], quantity: newQty }
+      newCart[existingIndex] = { ...newCart[existingIndex], quantity: newQty, stock: stock }
 
       // 累加成功提示
       alert(`✅「${productName}」數量已更新為 ${newQty} 件！`)
