@@ -32,79 +32,11 @@ async function sendAdminEmail(session: any) {
     })
 
     const mailOptions = {
-      from: `"Online Store" <${process.env.ADMIN_EMAIL}>`,
+      from: `"HK LK Store" <${process.env.ADMIN_EMAIL}>`,
       to: process.env.ADMIN_EMAIL,
       subject: `💰 付款成功通知 - $${amount} HKD`,
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: #2ecc71; margin: 0;">🎉 有新訂單！</h1>
-            <p style="color: #7f8c8d; margin: 10px 0 0 0;">Payment Successful</p>
-          </div>
-          
-          <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #2ecc71;">
-            <h3 style="margin-top: 0; color: #2c3e50;">💳 付款資訊</h3>
-            <p style="margin: 10px 0;"><strong>金額：</strong><span style="font-size: 18px; color: #e74c3c;">$${amount} HKD</span></p>
-            <p style="margin: 10px 0;"><strong>顧客郵箱：</strong>${customerEmail}</p>
-            ${phone ? `<p style="margin: 10px 0;"><strong>電話：</strong>${phone}</p>` : ''}
-            <p style="margin: 10px 0;"><strong>付款時間：</strong>${new Date().toLocaleString('zh-TW')}</p>
-          </div>
-
-          <div style="background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; margin: 20px 0;">
-            <h3 style="margin-top: 0; color: #2c3e50;">📦 購買商品</h3>
-            <table style="width: 100%; border-collapse: collapse;">
-              <thead>
-                <tr style="background: #f8f9fa;">
-                  <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">商品</th>
-                  <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">數量</th>
-                  <th style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">金額</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${lineItems.data
-                  .map(
-                    (item: any) => `
-                  <tr>
-                    <td style="padding: 10px; border-bottom: 1px solid #f0f0f0;">
-                      ${item.description || 'N/A'}
-                    </td>
-                    <td style="padding: 10px; text-align: center; border-bottom: 1px solid #f0f0f0;">
-                      ${item.quantity}
-                    </td>
-                    <td style="padding: 10px; text-align: right; border-bottom: 1px solid #f0f0f0;">
-                      $${((item.amount_total || 0) / 100).toFixed(2)}
-                    </td>
-                  </tr>
-                `,
-                  )
-                  .join('')}
-              </tbody>
-            </table>
-          </div>
-
-          ${
-            shippingName
-              ? `
-            <div style="background: #e8f4fd; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3498db;">
-              <h3 style="margin-top: 0; color: #2c3e50;">🚚 收貨資訊</h3>
-              <p style="margin: 10px 0;"><strong>收件人：</strong>${shippingName}</p>
-              <p style="margin: 10px 0;"><strong>地址：</strong><br>
-                ${shipping.line1 || ''} ${shipping.line2 || ''}<br>
-                ${shipping.city || ''}, ${shipping.state || ''} ${shipping.postal_code || ''}<br>
-                ${shipping.country || ''}
-              </p>
-            </div>
-          `
-              : ''
-          }
-
-          <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee; text-align: center;">
-            <p style="margin: 0 0 15px 0; color: #7f8c8d;">👉 點擊下方按鈕查看完整訂單詳情</p>
-            <a href="https://dashboard.stripe.com" style="display: inline-block; background: #3498db; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-              前往 Stripe Dashboard
-            </a>
-          </div>
-        </div>
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px"><div style=text-align:center;margin-bottom:30px><h1 style=color:#422ad5;margin:0;text-decoration:none>💵 你收到一張新訂單！🛒</h1><p style="color:#404040;margin:10px 0 0 0">成功支付</div><div style="background:#edf1fe;padding:20px;border-radius:8px;margin:20px 0;border-left:4px solid #422ad5"><h3 style=margin-top:0;color:#2c3e50>💳 付款資訊</h3><p style="margin:10px 0"><strong>金額：</strong><span style=font-size:18px;color:#e74c3c>$${amount} HKD</span><p style="margin:10px 0"><strong>顧客郵箱：</strong>${customerEmail}</p>${phone ? `<p style="margin:10px 0"><strong>電話：</strong>${phone}</p>` : ''}<p style="margin:10px 0"><strong>付款時間：</strong>${new Date().toLocaleString('zh-TW')}</div><div style="background:#fdf9e8;padding:20px;border-radius:8px;margin:20px 0;border-left:4px solid #df6f00"><h3 style=margin-top:0;color:#2c3e50>📦 購買商品</h3><table style=width:100%;border-collapse:collapse><thead><tr style=background:#fcb700><th style="padding:10px;text-align:left;border:1px solid #fdf9e8">商品<th style="padding:10px;text-align:center;border:1px solid #fdf9e8">數量<th style="padding:10px;text-align:right;border:1px solid #fdf9e8">金額<tbody>${lineItems.data.map((item: any) => `<tr><td style="padding:10px;border:1px solid #fcb700">${item.description || 'N/A'}<td style="padding:10px;text-align:center;border:1px solid #fcb700">${item.quantity}<td style="padding:10px;text-align:right;border:1px solid #fcb700">$${((item.amount_total || 0) / 100).toFixed(2)}</tr>`).join('')}</table></div>${shippingName ? `<div style="background:#edf7fd;padding:20px;border-radius:8px;margin:20px 0;border-left:4px solid #00bafe"><h3 style=margin-top:0;color:#2c3e50>🚚 收貨資訊</h3><p style="margin:10px 0"><strong>收件人：</strong>${shippingName}<p style="margin:10px 0"><strong>地址：</strong><br>${shipping.line1 || ''} ${shipping.line2 || ''}<br>${shipping.city || ''}, ${shipping.state || ''} ${shipping.postal_code || ''}<br>${shipping.country || ''}</div>` : ''}<div style="margin-top:30px;padding-top:20px;border-top:2px solid #eee;text-align:center"><p style="margin:0 0 15px 0;color:#404040">👉 點擊下方按鈕查看完整訂單詳情 👈</p><a href=https://dashboard.stripe.com style="display:inline-block;background:#422ad5;color:#e0e7ff;padding:12px 30px;text-decoration:none;border-radius:5px;font-weight:700">前往 Stripe Dashboard</a></div></div>
       `,
     }
 
