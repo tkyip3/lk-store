@@ -35,7 +35,6 @@ const productPlugin: Plugin = (config) => {
 }
 
 export default buildConfig({
-  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL || 'https://hklkstore.com',
   admin: {
     user: Users.slug,
     importMap: {
