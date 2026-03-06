@@ -23,6 +23,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'lk-store-production.tkyip3.workers.dev',
       },
+      {
+        protocol: 'https',
+        hostname: 'hklkstore.com', // ✅ 新增
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.hklkstore.com', // ✅ 新增
+      },
     ],
   },
 }
